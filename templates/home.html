@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- {% load static %} -->
+        <!-- <link rel="stylesheet" href='{% static
+         "nickelammonia/styles.css" %}' type=”text/css” /> -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <!-- <link rel="stylesheet" href='https://codepen.io/chriddyp/pen/bWLwgP.css' integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+
+        <style type="text/css">
+        /* nice color is #ff7675 */
+            body {
+                margin-left: 10px;
+                margin-right: 10px;
+                font-family: "Segoe UI";
+                background-color: #2d3436;
+            }
+            .navbar {
+                content:"";
+                margin-left: -10px;
+                margin-right: -10px;
+                margin-bottom: 5px;
+                padding-top: 3px;
+                padding-bottom: 5px;
+                background-color: rgb(250, 250, 250);
+            }
+            .home {
+                content:"";
+                display: block;
+                color: #2d3436;
+                /* text-transform: uppercase; */
+                font-style: bold;
+                font-size: 17px;
+                transition: 1s all ease;
+                text-decoration: none;
+            }
+            .home:hover {
+                color: #ff7675;
+                transition: 0.3s all ease;
+                text-decoration: none;
+                animation: pulse 1s infinite;
+                animation-timing-function: linear;
+            }
+
+            .navbar:after{
+                content: "";
+                position: absolute;
+                z-index: -1;
+                right: 0;
+                width: 0;
+                bottom: -5px;
+                background: #ff7675;;
+                height: 4px;
+                transition-property: width;
+                transition-duration: 1s;
+                transition-timing-function: ease-out;
+            }
+            .navbar:hover:after,
+            .navbar:focus:after,
+            .navbar:active:after {
+                left: 0;
+                right: auto;
+                width: 100%;
+            }
+
+
+            h2.heading {
+                margin-bottom: 2px;
+                margin-top: 2px;
+                background-color: #FEFDEB;
+                padding: -4px 0px -4px 0px;
+                text-align: center;
+                border: 1px solid lightgrey;
+            }
+            .linkstopages {
+                margin-bottom: 2px;
+                background-color: rgb(250, 250, 250);
+                padding: 4px 7px 4px 7px;
+                border: 1px solid lightgrey;
+            }
+            .linkstopages a {
+                color: #2d3436;
+            }
+            .linkstopages a:hover {
+                color: #ff7675;
+                text-decoration: none;
+
+            }
+            br {
+                display: block; /* makes it have a width */
+                content: ""; /* clears default height */
+                margin-top: 0; /* change this to whatever height you want it */
+            }
+            #background-wrap {
+                bottom: 0;
+            	left: 0;
+            	position: fixed;
+            	right: 0;
+            	top: 0;
+            	z-index: -1;
+            }
+            @keyframes pulse {
+                  0% { transform: scale(1); }
+                  50% { transform: scale(1.1);
+                  100% { transform: scale(1); }
+                  }
+                }
+
+            /* KEYFRAMES */
+            @-webkit-keyframes animateBubble {
+                0% {
+                    margin-top: 1000px;
+                }
+                100% {
+                    margin-top: -100%;
+                }
+            }
+
+            @-moz-keyframes animateBubble {
+                0% {
+                    margin-top: 1000px;
+                }
+                100% {
+                    margin-top: -100%;
+                }
+            }
+
+            @keyframes animateBubble {
+                0% {
+                    margin-top: 1000px;
+                }
+                100% {
+                    margin-top: -100%;
+                }
+            }
+
+            @-webkit-keyframes sideWays {
+                0% {
+                    margin-left:0px;
+                }
+                100% {
+                    margin-left:50px;
+                }
+            }
+
+            @-moz-keyframes sideWays {
+                0% {
+                    margin-left:0px;
+                }
+                100% {
+                    margin-left:50px;
+                }
+            }
+
+            @keyframes sideWays {
+                0% {
+                    margin-left:0px;
+                }
+                100% {
+                    margin-left:50px;
+                }
+            }
+
+            /* ANIMATIONS */
+
+            .x1 {
+                -webkit-animation: animateBubble 25s linear infinite, sideWays 2s ease-in-out infinite alternate;
+            	-moz-animation: animateBubble 25s linear infinite, sideWays 2s ease-in-out infinite alternate;
+            	animation: animateBubble 25s linear infinite, sideWays 2s ease-in-out infinite alternate;
+
+            	left: -5%;
+            	top: 5%;
+
+            	-webkit-transform: scale(0.6);
+            	-moz-transform: scale(0.6);
+            	transform: scale(0.6);
+            }
+
+            .x2 {
+                -webkit-animation: animateBubble 20s linear infinite, sideWays 4s ease-in-out infinite alternate;
+            	-moz-animation: animateBubble 20s linear infinite, sideWays 4s ease-in-out infinite alternate;
+            	animation: animateBubble 20s linear infinite, sideWays 4s ease-in-out infinite alternate;
+
+            	left: 5%;
+            	top: 80%;
+
+            	-webkit-transform: scale(0.4);
+            	-moz-transform: scale(0.4);
+            	transform: scale(0.4);
+            }
+
+            .x3 {
+                -webkit-animation: animateBubble 28s linear infinite, sideWays 2s ease-in-out infinite alternate;
+            	-moz-animation: animateBubble 28s linear infinite, sideWays 2s ease-in-out infinite alternate;
+            	animation: animateBubble 28s linear infinite, sideWays 2s ease-in-out infinite alternate;
+
+            	left: 10%;
+            	top: 40%;
+
+            	-webkit-transform: scale(0.7);
+            	-moz-transform: scale(0.7);
+            	transform: scale(0.7);
+            }
+
+            .x4 {
+                -webkit-animation: animateBubble 22s linear infinite, sideWays 3s ease-in-out infinite alternate;
+            	-moz-animation: animateBubble 22s linear infinite, sideWays 3s ease-in-out infinite alternate;
+            	animation: animateBubble 22s linear infinite, sideWays 3s ease-in-out infinite alternate;
+
+            	left: 20%;
+            	top: 0;
+
+            	-webkit-transform: scale(0.3);
+            	-moz-transform: scale(0.3);
+            	transform: scale(0.3);
+            }
+
+            .x5 {
+                -webkit-animation: animateBubble 29s linear infinite, sideWays 4s ease-in-out infinite alternate;
+            	-moz-animation: animateBubble 29s linear infinite, sideWays 4s ease-in-out infinite alternate;
+            	animation: animateBubble 29s linear infinite, sideWays 4s ease-in-out infinite alternate;
+
+            	left: 30%;
+            	top: 50%;
+
+            	-webkit-transform: scale(0.5);
+            	-moz-transform: scale(0.5);
+            	transform: scale(0.5);
+            }
+
+            .x6 {
+                -webkit-animation: animateBubble 21s linear infinite, sideWays 2s ease-in-out infinite alternate;
+            	-moz-animation: animateBubble 21s linear infinite, sideWays 2s ease-in-out infinite alternate;
+            	animation: animateBubble 21s linear infinite, sideWays 2s ease-in-out infinite alternate;
+
+            	left: 50%;
+            	top: 0;
+
+            	-webkit-transform: scale(0.8);
+            	-moz-transform: scale(0.8);
+            	transform: scale(0.8);
+            }
+
+            .x7 {
+                -webkit-animation: animateBubble 20s linear infinite, sideWays 2s ease-in-out infinite alternate;
+            	-moz-animation: animateBubble 20s linear infinite, sideWays 2s ease-in-out infinite alternate;
+            	animation: animateBubble 20s linear infinite, sideWays 2s ease-in-out infinite alternate;
+
+            	left: 65%;
+            	top: 70%;
+
+            	-webkit-transform: scale(0.4);
+            	-moz-transform: scale(0.4);
+            	transform: scale(0.4);
+            }
+
+            .x8 {
+                -webkit-animation: animateBubble 22s linear infinite, sideWays 3s ease-in-out infinite alternate;
+            	-moz-animation: animateBubble 22s linear infinite, sideWays 3s ease-in-out infinite alternate;
+            	animation: animateBubble 22s linear infinite, sideWays 3s ease-in-out infinite alternate;
+
+            	left: 80%;
+            	top: 10%;
+
+            	-webkit-transform: scale(0.3);
+            	-moz-transform: scale(0.3);
+            	transform: scale(0.3);
+            }
+
+            .x9 {
+                -webkit-animation: animateBubble 29s linear infinite, sideWays 4s ease-in-out infinite alternate;
+            	-moz-animation: animateBubble 29s linear infinite, sideWays 4s ease-in-out infinite alternate;
+            	animation: animateBubble 29s linear infinite, sideWays 4s ease-in-out infinite alternate;
+
+            	left: 90%;
+            	top: 50%;
+
+            	-webkit-transform: scale(0.6);
+            	-moz-transform: scale(0.6);
+            	transform: scale(0.6);
+            }
+
+            .x10 {
+                -webkit-animation: animateBubble 26s linear infinite, sideWays 2s ease-in-out infinite alternate;
+            	-moz-animation: animateBubble 26s linear infinite, sideWays 2s ease-in-out infinite alternate;
+            	animation: animateBubble 26s linear infinite, sideWays 2s ease-in-out infinite alternate;
+
+            	left: 80%;
+            	top: 80%;
+
+            	-webkit-transform: scale(0.3);
+            	-moz-transform: scale(0.3);
+            	transform: scale(0.3);
+            }
+
+            /* OBJECTS */
+
+            .bubble {
+                -webkit-border-radius: 50%;
+            	-moz-border-radius: 50%;
+            	border-radius: 50%;
+
+                -webkit-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2), inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
+            	-moz-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2), inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
+            	box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2), inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
+
+                height: 200px;
+            	position: absolute;
+            	width: 200px;
+            }
+
+            .bubble:after {
+                background: -moz-radial-gradient(center, ellipse cover,  rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 70%); /* FF3.6+ */
+                background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(255,255,255,0.5)), color-stop(70%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
+                background: -webkit-radial-gradient(center, ellipse cover,  rgba(255,255,255,0.5) 0%,rgba(255,255,255,0) 70%); /* Chrome10+,Safari5.1+ */
+                background: -o-radial-gradient(center, ellipse cover,  rgba(255,255,255,0.5) 0%,rgba(255,255,255,0) 70%); /* Opera 12+ */
+                background: -ms-radial-gradient(center, ellipse cover,  rgba(255,255,255,0.5) 0%,rgba(255,255,255,0) 70%); /* IE10+ */
+                background: radial-gradient(ellipse at center,  rgba(255,255,255,0.5) 0%,rgba(255,255,255,0) 70%); /* W3C */
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#80ffffff', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+            	-webkit-border-radius: 50%;
+            	-moz-border-radius: 50%;
+            	border-radius: 50%;
+
+                -webkit-box-shadow: inset 0 20px 30px rgba(255, 255, 255, 0.3);
+            	-moz-box-shadow: inset 0 20px 30px rgba(255, 255, 255, 0.3);
+            	box-shadow: inset 0 20px 30px rgba(255, 255, 255, 0.3);
+
+            	content: "";
+                height: 180px;
+            	left: 10px;
+            	position: absolute;
+            	width: 180px;
+            }
+
+        </style>
+    </head>
+
+    <body>
+
+        <div id="background-wrap">
+            <div class="bubble x1"></div>
+            <div class="bubble x2"></div>
+            <div class="bubble x3"></div>
+            <div class="bubble x4"></div>
+            <div class="bubble x5"></div>
+            <div class="bubble x6"></div>
+            <div class="bubble x7"></div>
+            <div class="bubble x8"></div>
+            <div class="bubble x9"></div>
+            <div class="bubble x10"></div>
+        </div>
+
+        <div class='navbar'>
+            <a href="{% url 'home' %}" class='home'>Home</a>
+        </div>
+
+        <h2 class='heading'>Welcome to the database</h2>
+
+
+        <div class='linkstopages'>
+            <h5><u>Nickel</u></h5>
+            <a href="{% url 'nickelpure' %}">Nickel-H<sub>2</sub>O</a>
+            <br></br>
+            <a href="{% url 'nickelammonia' %}">Nickel-Ammonia-H<sub>2</sub>O</a>
+            <br></br>
+            <a href="{% url 'nickelcitrate' %}">Nickel-Citrate-H<sub>2</sub>O</a>
+        </div>
+
+
+    </body>
+</html>
