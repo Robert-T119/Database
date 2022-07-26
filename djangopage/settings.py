@@ -28,7 +28,8 @@ SECRET_KEY = '244e123eb364ed5e4f4ffc0acc3084da43c951036847108'
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = False
 #SECRET_KEY = os.environ.get('SECRET_KEY ')
-DEBUG = True
+DEBUG = (os.environ.get('DEBUG_VALUE') == "True")
+#DEBUG = True
 
 # HEROKU CHANGE
 ALLOWED_HOSTS = ['127.0.0.1:8000', '127.0.0.1', 'bohui119.herokuapp.com']
