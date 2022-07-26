@@ -52,11 +52,11 @@ app.layout = html.Div([
         html.H6(u'Total citrate concentration (kmolm\u207B\u00B3):'),
         dcc.Slider(
             id='citrate_dropdown',
-            min=0.1,
+            min=0,
             max=3.0,
             value=1.0,
             step=0,
-            marks={n_activity: str(n_activity) for n_activity in [0.1,0.2, 0.3,
+            marks={n_activity: str(n_activity) for n_activity in [0, 0.1,0.2, 0.3,
                 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5,
                 1.6, 1.7, 1.8, 1.9, 2, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3]},
                  ),
@@ -159,8 +159,8 @@ def speciation_graph(citrate_total, ni_total):
             Nicit = k5 * ni2pfree * cit3
         elif citrate_total == 0:
             f = 10 ** (logk-2*pH_x)
-            nip2free = f / (1 + f / nitotal)
-            nio2 = nitotal - nip2free
+            nip2free = f / (1 + f / ni_total)
+            nio2 = ni_total - nip2free
             cit3 = Hcit =H2cit =H3cit =NiHcit =Nicit =NiH2cit=0
         return [cit3, nio2, ni2pfree, Hcit, H2cit, H3cit, NiH2cit, NiHcit, Nicit]
 
@@ -189,7 +189,7 @@ def speciation_graph(citrate_total, ni_total):
     # only show if they are greater than ni(oh)2 conc, (n is for nh3, nhp for nh4+),
     # note pH_x input needs to be a list also
     NiH2cit = NiHcit = Nicit = nip2 =ni_total
-    cit3 = Hcit = H2cit = H3cit =citrate_total
+    cit3 = Hcit = H2cit = H3cit = citrate_total
     T_ = 298
 
     def trace_generator(pH_x, nip2, NiH2cit, NiHcit, Nicit, H3cit, H2cit, Hcit, cit3, T_):
