@@ -15,9 +15,7 @@ import django_on_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import storages.backends.s3boto3
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-#SECRET_KEY = os.environ.get('SECRET_KEY ')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -27,11 +25,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = False
+# DEBUG = True
 SECRET_KEY = os.environ.get('SECRET_KEY ')
 DEBUG = (os.environ.get('DEBUG_VALUE') == "True")
-#DEBUG = True
 
-# HEROKU CHANGE
+
 ALLOWED_HOSTS = ['127.0.0.1:8000', '127.0.0.1', 'bohui119.herokuapp.com']
 # ALLOWED_HOSTS = []
 
@@ -198,12 +196,11 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 # STATICFILES_LOCATION = 'static'
-# HEROKU CHANGE
 # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 #STATICFILES_DIRS = (
-    #os.path.join(BASE_DIR, "static"),
-#)
+#os.path.join(BASE_DIR, "static"),
+
 
 django_on_heroku.settings(locals())
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
