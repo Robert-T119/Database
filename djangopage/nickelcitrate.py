@@ -354,11 +354,11 @@ def speciation_graph(citrate_total, ni_total):
     nio3regiony = trace_generator(pH_x, nip2, NiH2cit, NiHcit, Nicit, H3cit, H2cit, Hcit, cit3, T_)[5]
 
     if citrate_total != 0:
-        name= ['Ni<sup>2+</sup>', 'NiH<sub>2</sub>cit<sup>+</sup>',  'NiHcit</sub>', 'Nicit<sup>-</sup>', 'Ni(OH)<sub>2</sub>']
-        color = ['rgba(191, 63, 63, 0.5)', 'rgba(243, 238, 77, 0.5)',  'rgba(252, 177, 101, 0.8)', 'rgba(7, 117, 189, 0.66)', 'rgba(63, 63, 191, 0.5)']
+        name_1= ['Ni<sup>2+</sup>', 'NiH<sub>2</sub>cit<sup>+</sup>',  'NiHcit</sub>', 'Nicit<sup>-</sup>', 'Ni(OH)<sub>2</sub>']
+        color_1 = ['rgba(191, 63, 63, 0.5)', 'rgba(243, 238, 77, 0.5)',  'rgba(252, 177, 101, 0.8)', 'rgba(7, 117, 189, 0.66)', 'rgba(63, 63, 191, 0.5)']
     elif citrate_total == 0:
-        name = ['Ni<sup>2+</sup>', 'Ni(OH)<sub>2</sub>']
-        color= ['rgba(191, 63, 63, 0.5)', 'rgba(243, 238, 77, 0.5)']
+        name_2 = ['Ni<sup>2+</sup>', 'Ni(OH)<sub>2</sub>']
+        color_2 = ['rgba(191, 63, 63, 0.5)', 'rgba(243, 238, 77, 0.5)']
 
     data = []
     if citrate_total != 0:
@@ -369,9 +369,9 @@ def speciation_graph(citrate_total, ni_total):
                 mode='none',
                 fill='toself',
                 hoverinfo='skip',
-                fillcolor=color[i],
+                fillcolor=color_1[i],
                 showlegend=True,
-                name=name[i]
+                name=name_1[i]
             ))
 
     elif citrate_total == 0:
@@ -382,9 +382,9 @@ def speciation_graph(citrate_total, ni_total):
                 mode='none',
                 fill='toself',
                 hoverinfo='skip',
-                fillcolor=color[i],
+                fillcolor=color_2[i],
                 showlegend=True,
-                name=name[i]
+                name=name_2[i]
             ))
 
     # add water splitting
