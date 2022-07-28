@@ -31,13 +31,13 @@ app.layout = html.Div([
         html.H6(u"Total nickel concentration (kmolm\u207B\u00B3):"),
         dcc.Slider(
             id='nickel_slider',
-            min=0.2,
-            max=2.0,
-            value=1.1,
-            step=0.1,
-            marks={n_activity: str(n_activity) for n_activity in [0.2, 0.3,
+            min=0.1,
+            max=3.0,
+            value=1.0,
+            step=0,
+            marks={n_activity: str(n_activity) for n_activity in [0.1, 0.2, 0.3,
                 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5,
-                1.6, 1.7, 1.8, 1.9, 2, 2.1]},
+                1.6, 1.7, 1.8, 1.9, 2, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3.0]},
                 ),
             ],
         style={
@@ -54,10 +54,11 @@ app.layout = html.Div([
             id='ammonia_dropdown',
             min=0.0,
             max=3.0,
-            value=1.2,
-            step=0.3,
-            marks={i: str(i) for i in [0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6,
-                1.8, 2, 2.2, 2.4, 2.6, 2.8, 3]},
+            value=1.0,
+            step=0,
+            marks={i: str(i) for i in [0, 0.1, 0.2, 0.3,
+                0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5,
+                1.6, 1.7, 1.8, 1.9, 2, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3.0]},
         ),
     ],
         style={
@@ -381,28 +382,31 @@ def speciation_graph(nitotal, ntotal):
         name = ['Ni<sup>2+</sup>', 'Ni(OH)<sub>2</sub>']
         color = ['rgba(191, 63, 63, 0.5)', 'rgba(243, 238, 77, 0.5)']
     data = []
-    for i, xvals in enumerate(xs):
-        if i == 2 and status != 3:
+    if status != 3:
+        for i, xvals in enumerate(xs):
             data.append(go.Scatter(
-            x=xvals,
-            y=ys[i],
-            mode='none',
-            fill='toself',
-            hoverinfo='skip',
-            fillcolor=color[1],
-            showlegend = False,
-        ))
-        else:
+                x=xvals,
+                y=ys[i],
+                mode='none',
+                fill='toself',
+                hoverinfo='skip',
+                fillcolor=color[i],
+                showlegend=True,
+                name=name[i]
+            ))
+
+    elif status == 3:
+        for i, xvals in enumerate(xs):
             data.append(go.Scatter(
-            x=xvals,
-            y=ys[i],
-            mode='none',
-            fill='toself',
-            hoverinfo='skip',
-            fillcolor=color[i],
-            showlegend=True,
-            name=name[i]
-        ))
+                x=xvals,
+                y=ys[i],
+                mode='none',
+                fill='toself',
+                hoverinfo='skip',
+                fillcolor=color[i],
+                showlegend=True,
+                name=name[i]
+            ))
     # add water splitting
     ywater = [W1(pH_x, T_), W2(pH_x, T_)]
     for ys in ywater:
