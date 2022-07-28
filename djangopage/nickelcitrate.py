@@ -6,6 +6,7 @@ import numpy as np
 import plotly.graph_objects as go
 from scipy.optimize import fsolve
 from django_plotly_dash import DjangoDash
+from scipy.optimize import least_squares
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
@@ -140,17 +141,17 @@ def speciation_graph(ni_total, citrate_total):
                 Hcit = h * cit3 / k4
                 H2cit = h * Hcit / k3
                 H3cit = H2cit * h / k2
-                ni2pfree = (nio2 * k1 * (h ** (2))) / (1 + ((nio2 * k1 * (h ** (2))) / ni_total))
+                ni2pfree = (nio2 * k1 * (h ** 2)) / (1 + ((nio2 * k1 * (h ** 2)) / ni_total))
                 NiH2cit = k7 * ni2pfree * H2cit
                 NiHcit = k6 * ni2pfree * Hcit
                 Nicit = k5 * ni2pfree * cit3
                 F[0] = citrate_total - Hcit - H2cit - H3cit - Nicit - NiHcit - NiH2cit - cit3
                 F[1] = ni_total - Nicit - NiHcit - NiH2cit - ni2pfree - nio2
                 return F
-            z = fsolve(f, [0.1, 0.1])
-            cit3 = z[0]
-            nio2 = z[1]
-            ni2pfree = (nio2 * k1 * (h ** (2))) / (1 + ((nio2 * k1 * (h ** (2))) / ni_total))
+            res = least_squares(f, (0.1, 0.1), bounds=((0, 0), (1, 1)))
+            cit3 = res.x[0]
+            nio2 = res.x[1]
+            ni2pfree = (nio2 * k1 * (h ** 2)) / (1 + ((nio2 * k1 * (h ** 2)) / ni_total))
             Hcit = h * cit3 / k4
             H2cit = h * Hcit / k3
             H3cit = H2cit * h / k2
@@ -608,17 +609,17 @@ def speciation_graph(ni_total, citrate_total):
                 Hcit = h * cit3 / k4
                 H2cit = h * Hcit / k3
                 H3cit = H2cit * h / k2
-                ni2pfree = (nio2 * k1 * (h ** (2))) / (1 + ((nio2 * k1 * (h ** (2))) / ni_total))
+                ni2pfree = (nio2 * k1 * (h ** 2)) / (1 + ((nio2 * k1 * (h ** 2)) / ni_total))
                 NiH2cit = k7 * ni2pfree * H2cit
                 NiHcit = k6 * ni2pfree * Hcit
                 Nicit = k5 * ni2pfree * cit3
                 F[0] = citrate_total - Hcit - H2cit - H3cit - Nicit - NiHcit - NiH2cit - cit3
                 F[1] = ni_total - Nicit - NiHcit - NiH2cit - ni2pfree - nio2
                 return F
-            z = fsolve(f, [0.1, 0.1])
-            cit3 = z[0]
-            nio2 = z[1]
-            ni2pfree = (nio2 * k1 * (h ** (2))) / (1 + ((nio2 * k1 * (h ** (2))) / ni_total))
+            res = least_squares(f, (0.1, 0.1), bounds=((0, 0), (1, 1)))
+            cit3 = res.x[0]
+            nio2 = res.x[1]
+            ni2pfree = (nio2 * k1 * (h ** 2)) / (1 + ((nio2 * k1 * (h ** 2)) / ni_total))
             Hcit = h * cit3 / k4
             H2cit = h * Hcit / k3
             H3cit = H2cit * h / k2
