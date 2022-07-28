@@ -1,6 +1,8 @@
 from djangopage.reactions2 import *
+#from reactions2 import *
 import dash_core_components as dcc
 import dash_html_components as html
+from dash import Dash
 from dash.dependencies import Input, Output
 import numpy as np
 import plotly.graph_objects as go
@@ -9,7 +11,7 @@ from django_plotly_dash import DjangoDash
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-# app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+#app = Dash(__name__, external_stylesheets=external_stylesheets)
 app = DjangoDash('nickelcitrate', add_bootstrap_links=True)
 # , add_bootstrap_links=True
 # add_bootstrap_links=True
@@ -52,10 +54,10 @@ app.layout = html.Div([
         html.H6(u'Total citrate concentration (kmolm\u207B\u00B3):'),
         dcc.Slider(
             id='citrate_dropdown',
-            min=0,
+            min=0.0,
             max=3.0,
-            value=1.0,
-            step=0,
+            value=1.2,
+            step=0.1,
             marks={n_activity: str(n_activity) for n_activity in [0, 0.1,0.2, 0.3,
                 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5,
                 1.6, 1.7, 1.8, 1.9, 2, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3]},
@@ -129,10 +131,10 @@ def speciation_graph(ni_total, citrate_total):
     #----------------------------------------------------------------------------------------------
     # begin first function, output all species concentrations. One concentration for each pH value.
 
-    def concs(ni_total, citrate_total, pH_x):
+    def concs(citrate_total, ni_total, pH_x):
         h = 10 ** (-pH_x)
 
-        if citrate_total != 0:
+        if citrate_total != 0.0:
             def f(z):
                 cit3 = z[0]
                 nio2 = z[1]
@@ -157,10 +159,10 @@ def speciation_graph(ni_total, citrate_total):
             NiH2cit = k7 * ni2pfree * H2cit
             NiHcit = k6 * ni2pfree * Hcit
             Nicit = k5 * ni2pfree * cit3
-        elif citrate_total == 0:
+        elif citrate_total == 0.0:
             f = 10 ** (logk-2*pH_x)
-            nip2free = f / (1 + f / ni_total)
-            nio2 = ni_total - nip2free
+            ni2pfree = f / (1 + f / ni_total)
+            nio2 = ni_total - ni2pfree
             cit3 = Hcit =H2cit =H3cit =NiHcit =Nicit =NiH2cit=0
         return [cit3, nio2, ni2pfree, Hcit, H2cit, H3cit, NiH2cit, NiHcit, Nicit]
 
@@ -188,8 +190,8 @@ def speciation_graph(ni_total, citrate_total):
     # previous section generates the concentrations of species, in ni(oh)2 region complexes need to
     # only show if they are greater than ni(oh)2 conc, (n is for nh3, nhp for nh4+),
     # note pH_x input needs to be a list also
+    NiH2cit = NiHcit = Nicit = nip2 =ni_total
     cit3 = Hcit = H2cit = H3cit = citrate_total
-    NiH2cit = NiHcit = Nicit = nip2 = ni_total
     T_ = 298
 
     def trace_generator(pH_x, nip2, NiH2cit, NiHcit, Nicit, H3cit, H2cit, Hcit, cit3, T_):
@@ -585,6 +587,7 @@ def speciation_graph(ni_total, citrate_total):
      Input('citrate_dropdown', 'value')])
 
 def speciation_graph(ni_total, citrate_total):
+    logk = 11.96
     k1 = 9.197 * (10 ** 11)
     k2 = 1.01 * (10 ** -3)
     k3 = 1.787 * (10 ** -5)
@@ -592,15 +595,14 @@ def speciation_graph(ni_total, citrate_total):
     k5 = 2.512 * (10 ** 5)
     k6 = 1.995 * (10 ** 3)
     k7 = 5.623 * (10 ** 1)
-    logk =11.96
     pH_x = np.linspace(0, 14, 71)
     #----------------------------------------------------------------------------------------------
     # begin first function, output all species concentrations. One concentration for each pH value.
 
-    def concs(ni_total, citrate_total, pH_x):
+    def concs(citrate_total, ni_total, pH_x):
         h = 10 ** (-pH_x)
 
-        if citrate_total != 0:
+        if citrate_total != 0.0:
             def f(z):
                 cit3 = z[0]
                 nio2 = z[1]
@@ -625,12 +627,13 @@ def speciation_graph(ni_total, citrate_total):
             NiH2cit = k7 * ni2pfree * H2cit
             NiHcit = k6 * ni2pfree * Hcit
             Nicit = k5 * ni2pfree * cit3
-        elif citrate_total == 0:
+        elif citrate_total == 0.0:
             f = 10 ** (logk-2*pH_x)
-            nip2free = f / (1 + f / ni_total)
-            nio2 = ni_total - nip2free
-            cit3 = Hcit =H2cit =H3cit =NiHcit =Nicit = NiH2cit = 0.0
+            ni2pfree = f / (1 + f / ni_total)
+            nio2 = ni_total - ni2pfree
+            cit3 = Hcit =H2cit =H3cit =NiHcit =Nicit =NiH2cit=0
         return [cit3, nio2, ni2pfree, Hcit, H2cit, H3cit, NiH2cit, NiHcit, Nicit]
+
 
     cit3freeplot = []
     nio2freeplot = []
@@ -655,17 +658,17 @@ def speciation_graph(ni_total, citrate_total):
 
     if citrate_total != 0.0:
         datasets = [cit3freeplot, nio2freeplot, ni2pfreeplot, Hcitfreeplot, H2citfreeplot,
-                      H3citfreeplot, NiH2citfreeplot, NiHcitfreeplot, Nicitfreeplot]
+                H3citfreeplot, NiH2citfreeplot, NiHcitfreeplot, Nicitfreeplot]
         name = ['Cit<sup>3-</sup>', 'Ni(OH)<sub>2</sub>', 'Ni<sup>2+</sup>', 'Hcit<sup>2-</sup>',
-                'H<sub>2</sub>cit<sup>2-</sup>','H<sub>3</sub>cit', 'NiH<sub>2</sub>cit<sup>+</sup>',
-                'NiH<sub>cit</sub>', 'Nicit<sup>-</sup>']
+            'H<sub>2</sub>cit<sup>2-</sup>','H<sub>3</sub>cit', 'NiH<sub>2</sub>cit<sup>+</sup>',
+            'NiH<sub>cit</sub>', 'Nicit<sup>-</sup>']
         fill = [None, None, None, None, None, None, None, None, None]
         color = ['rgb(90, 0, 100)', 'rgb(40, 130, 80)', 'rgb(9, 0, 0)', 'rgb(63, 63, 191)', 'rgb(191, 63, 63)',
-                 'rgb(66, 81, 245)', 'rgb(218, 66, 245)', 'rgb(245, 144, 66)', 'rgb(245, 66, 90)']
+             'rgb(66, 81, 245)', 'rgb(218, 66, 245)', 'rgb(245, 144, 66)', 'rgb(245, 66, 90)']
     elif citrate_total == 0.0:
         datasets = [ni2pfreeplot, nio2freeplot]
         name = ['Ni<sup>2+</sup>', 'Ni(OH)<sub>2</sub>']
-        fill = [None, None]
+        fill = [None for i in range(len(name))]
         color = ['rgb(191, 63, 63)', 'rgb(243, 238, 77)']
 
     data1 = []
@@ -713,3 +716,6 @@ def speciation_graph(ni_total, citrate_total):
             'yanchor': 'top'
             })
     return fig1
+
+#if __name__ == '__main__':
+    #app.run_server(debug=True)
