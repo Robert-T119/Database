@@ -117,81 +117,12 @@ app.layout = html.Div([
     [Input('nickel_slider', 'value'),
      Input('citrate_dropdown', 'value')])
 
+
 def speciation_graph(ni_total, citrate_total):
-    k1 = 9.197 * (10 ** 11)
-    k2 = 1.01 * (10 ** -3)
-    k3 = 1.787 * (10 ** -5)
-    k4 = 4.031 * (10 ** -7)
-    k5 = 2.512 * (10 ** 5)
-    k6 = 1.995 * (10 ** 3)
-    k7 = 5.623 * (10 ** 1)
-    logk = 11.96
-    pH_x = np.linspace(0, 14, 71)
-    #----------------------------------------------------------------------------------------------
-    # begin first function, output all species concentrations. One concentration for each pH value.
-
-    def concs(citrate_total, ni_total, pH_x):
-        h = 10 ** (-pH_x)
-
-        if citrate_total != 0:
-            def f(z):
-                cit3 = z[0]
-                nio2 = z[1]
-                F = np.empty(2)
-                Hcit = h * cit3 / k4
-                H2cit = h * Hcit / k3
-                H3cit = H2cit * h / k2
-                ni2pfree = (nio2 * k1 * (h ** 2)) / (1 + ((nio2 * k1 * (h ** 2)) / ni_total))
-                NiH2cit = k7 * ni2pfree * H2cit
-                NiHcit = k6 * ni2pfree * Hcit
-                Nicit = k5 * ni2pfree * cit3
-                F[0] = citrate_total - Hcit - H2cit - H3cit - Nicit - NiHcit - NiH2cit - cit3
-                F[1] = ni_total - Nicit - NiHcit - NiH2cit - ni2pfree - nio2
-                return F
-            res = least_squares(f, (0.1, 0.1), bounds=((0, 0), (1, 1)))
-            cit3 = res.x[0]
-            nio2 = res.x[1]
-            ni2pfree = (nio2 * k1 * (h ** 2)) / (1 + ((nio2 * k1 * (h ** 2)) / ni_total))
-            Hcit = h * cit3 / k4
-            H2cit = h * Hcit / k3
-            H3cit = H2cit * h / k2
-            NiH2cit = k7 * ni2pfree * H2cit
-            NiHcit = k6 * ni2pfree * Hcit
-            Nicit = k5 * ni2pfree * cit3
-        elif citrate_total == 0:
-            f = 10 ** (logk-2*pH_x)
-            ni2pfree = f / (1 + f / ni_total)
-            nio2 = ni_total - ni2pfree
-            cit3 = Hcit =H2cit =H3cit =NiHcit =Nicit =NiH2cit=0
-        return [cit3, nio2, ni2pfree, Hcit, H2cit, H3cit, NiH2cit, NiHcit, Nicit]
-
-    cit3freeplot = []
-    nio2freeplot = []
-    ni2pfreeplot = []
-    Hcitfreeplot = []
-    H2citfreeplot = []
-    H3citfreeplot = []
-    NiH2citfreeplot = []
-    NiHcitfreeplot = []
-    Nicitfreeplot = []
-
-    for pHval in pH_x:
-        cit3freeplot.append(concs(citrate_total, ni_total, pHval)[0])
-        nio2freeplot.append(concs(citrate_total, ni_total, pHval)[1])
-        ni2pfreeplot.append(concs(citrate_total, ni_total, pHval)[2])
-        Hcitfreeplot.append(concs(citrate_total, ni_total, pHval)[3])
-        H2citfreeplot.append(concs(citrate_total, ni_total, pHval)[4])
-        H3citfreeplot.append(concs(citrate_total, ni_total, pHval)[5])
-        NiH2citfreeplot.append(concs(citrate_total, ni_total, pHval)[6])
-        NiHcitfreeplot.append(concs(citrate_total, ni_total, pHval)[7])
-        Nicitfreeplot.append(concs(citrate_total, ni_total, pHval)[8])
-    #----------------------------------------------------------------------------------------------
-    # previous section generates the concentrations of species, in ni(oh)2 region complexes need to
-    # only show if they are greater than ni(oh)2 conc, (n is for nh3, nhp for nh4+),
-    # note pH_x input needs to be a list also
     NiH2cit = NiHcit = Nicit = nip2 =ni_total
     cit3 = Hcit = H2cit = H3cit = citrate_total
     T_ = 298
+    pH_x =np.linspace(0,14,71)
 
     def trace_generator(pH_x, nip2, NiH2cit, NiHcit, Nicit, H3cit, H2cit, Hcit, cit3, T_):
         def interceptgenerator(pH_x, nip2, NiH2cit, NiHcit, Nicit, H3cit, H2cit, Hcit, cit3, T_):
