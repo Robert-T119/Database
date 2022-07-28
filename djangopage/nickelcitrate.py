@@ -116,7 +116,7 @@ app.layout = html.Div([
     [Input('nickel_slider', 'value'),
      Input('citrate_dropdown', 'value')])
 
-def speciation_graph(citrate_total, ni_total):
+def speciation_graph(ni_total, citrate_total):
     k1 = 9.197 * (10 ** 11)
     k2 = 1.01 * (10 ** -3)
     k3 = 1.787 * (10 ** -5)
@@ -129,7 +129,7 @@ def speciation_graph(citrate_total, ni_total):
     #----------------------------------------------------------------------------------------------
     # begin first function, output all species concentrations. One concentration for each pH value.
 
-    def concs(citrate_total, ni_total, pH_x):
+    def concs(ni_total, citrate_total, pH_x):
         h = 10 ** (-pH_x)
 
         if citrate_total != 0:
@@ -188,8 +188,8 @@ def speciation_graph(citrate_total, ni_total):
     # previous section generates the concentrations of species, in ni(oh)2 region complexes need to
     # only show if they are greater than ni(oh)2 conc, (n is for nh3, nhp for nh4+),
     # note pH_x input needs to be a list also
-    NiH2cit = NiHcit = Nicit = nip2 =ni_total
     cit3 = Hcit = H2cit = H3cit = citrate_total
+    NiH2cit = NiHcit = Nicit = nip2 = ni_total
     T_ = 298
 
     def trace_generator(pH_x, nip2, NiH2cit, NiHcit, Nicit, H3cit, H2cit, Hcit, cit3, T_):
@@ -584,7 +584,7 @@ def speciation_graph(citrate_total, ni_total):
     [Input('nickel_slider', 'value'),
      Input('citrate_dropdown', 'value')])
 
-def speciation_graph(citrate_total, ni_total):
+def speciation_graph(ni_total, citrate_total):
     k1 = 9.197 * (10 ** 11)
     k2 = 1.01 * (10 ** -3)
     k3 = 1.787 * (10 ** -5)
@@ -592,41 +592,45 @@ def speciation_graph(citrate_total, ni_total):
     k5 = 2.512 * (10 ** 5)
     k6 = 1.995 * (10 ** 3)
     k7 = 5.623 * (10 ** 1)
+    logk =11.96
     pH_x = np.linspace(0, 14, 71)
     #----------------------------------------------------------------------------------------------
     # begin first function, output all species concentrations. One concentration for each pH value.
 
-    def concs(citrate_total, ni_total, pH_x):
+    def concs(ni_total, citrate_total, pH_x):
         h = 10 ** (-pH_x)
 
-        def f(z):
+        if citrate_total != 0:
+            def f(z):
+                cit3 = z[0]
+                nio2 = z[1]
+                F = np.empty(2)
+                Hcit = h * cit3 / k4
+                H2cit = h * Hcit / k3
+                H3cit = H2cit * h / k2
+                ni2pfree = (nio2 * k1 * (h ** (2))) / (1 + ((nio2 * k1 * (h ** (2))) / ni_total))
+                NiH2cit = k7 * ni2pfree * H2cit
+                NiHcit = k6 * ni2pfree * Hcit
+                Nicit = k5 * ni2pfree * cit3
+                F[0] = citrate_total - Hcit - H2cit - H3cit - Nicit - NiHcit - NiH2cit - cit3
+                F[1] = ni_total - Nicit - NiHcit - NiH2cit - ni2pfree - nio2
+                return F
+            z = fsolve(f, [0.1, 0.1])
             cit3 = z[0]
             nio2 = z[1]
-            F = np.empty(2)
+            ni2pfree = (nio2 * k1 * (h ** (2))) / (1 + ((nio2 * k1 * (h ** (2))) / ni_total))
             Hcit = h * cit3 / k4
             H2cit = h * Hcit / k3
             H3cit = H2cit * h / k2
-            ni2pfree = (nio2 * k1 * (h ** (2))) / (1 + ((nio2 * k1 * (h ** (2))) / ni_total))
             NiH2cit = k7 * ni2pfree * H2cit
             NiHcit = k6 * ni2pfree * Hcit
             Nicit = k5 * ni2pfree * cit3
-            F[0] = citrate_total - Hcit - H2cit - H3cit - Nicit - NiHcit - NiH2cit - cit3
-            F[1] = ni_total - Nicit - NiHcit - NiH2cit - ni2pfree - nio2
-            return F
-        z = fsolve(f, [0.1, 0.1])
-        cit3 = z[0]
-        nio2 = z[1]
-        ni2pfree = (nio2 * k1 * (h ** (2))) / (1 + ((nio2 * k1 * (h ** (2))) / ni_total))
-        Hcit = h * cit3 / k4
-        H2cit = h * Hcit / k3
-        H3cit = H2cit * h / k2
-        NiH2cit = k7 * ni2pfree * H2cit
-        NiHcit = k6 * ni2pfree * Hcit
-        Nicit = k5 * ni2pfree * cit3
-        # nio2_1=ni2pfree/(k1*(h**2))
-        # ni2pfree_1= ni_total-Nicit-NiHcit-NiH2cit-nio2_1
+        elif citrate_total == 0:
+            f = 10 ** (logk-2*pH_x)
+            nip2free = f / (1 + f / ni_total)
+            nio2 = ni_total - nip2free
+            cit3 = Hcit =H2cit =H3cit =NiHcit =Nicit = NiH2cit = 0.0
         return [cit3, nio2, ni2pfree, Hcit, H2cit, H3cit, NiH2cit, NiHcit, Nicit]
-
 
     cit3freeplot = []
     nio2freeplot = []
@@ -649,14 +653,21 @@ def speciation_graph(citrate_total, ni_total):
         NiHcitfreeplot.append(concs(citrate_total, ni_total, pHval)[7])
         Nicitfreeplot.append(concs(citrate_total, ni_total, pHval)[8])
 
-    datasets = [cit3freeplot, nio2freeplot, ni2pfreeplot, Hcitfreeplot, H2citfreeplot,
-                H3citfreeplot, NiH2citfreeplot, NiHcitfreeplot, Nicitfreeplot]
-    name = ['Cit<sup>3-</sup>', 'Ni(OH)<sub>2</sub>', 'Ni<sup>2+</sup>', 'Hcit<sup>2-</sup>',
-            'H<sub>2</sub>cit<sup>2-</sup>','H<sub>3</sub>cit', 'NiH<sub>2</sub>cit<sup>+</sup>',
-            'NiH<sub>cit</sub>', 'Nicit<sup>-</sup>']
-    fill = [None, None, None, None, None, None, None, None, None]
-    color = ['rgb(90, 0, 100)', 'rgb(40, 130, 80)', 'rgb(9, 0, 0)', 'rgb(63, 63, 191)', 'rgb(191, 63, 63)',
-             'rgb(66, 81, 245)', 'rgb(218, 66, 245)', 'rgb(245, 144, 66)', 'rgb(245, 66, 90)']
+    if citrate_total != 0.0:
+        datasets = [cit3freeplot, nio2freeplot, ni2pfreeplot, Hcitfreeplot, H2citfreeplot,
+                      H3citfreeplot, NiH2citfreeplot, NiHcitfreeplot, Nicitfreeplot]
+        name = ['Cit<sup>3-</sup>', 'Ni(OH)<sub>2</sub>', 'Ni<sup>2+</sup>', 'Hcit<sup>2-</sup>',
+                'H<sub>2</sub>cit<sup>2-</sup>','H<sub>3</sub>cit', 'NiH<sub>2</sub>cit<sup>+</sup>',
+                'NiH<sub>cit</sub>', 'Nicit<sup>-</sup>']
+        fill = [None, None, None, None, None, None, None, None, None]
+        color = ['rgb(90, 0, 100)', 'rgb(40, 130, 80)', 'rgb(9, 0, 0)', 'rgb(63, 63, 191)', 'rgb(191, 63, 63)',
+                 'rgb(66, 81, 245)', 'rgb(218, 66, 245)', 'rgb(245, 144, 66)', 'rgb(245, 66, 90)']
+    elif citrate_total == 0.0:
+        datasets = [ni2pfreeplot, nio2freeplot]
+        name = ['Ni<sup>2+</sup>', 'Ni(OH)<sub>2</sub>']
+        fill = [None, None]
+        color = ['rgb(191, 63, 63)', 'rgb(243, 238, 77)']
+
     data1 = []
     for i, dataset in enumerate(datasets):
         data1.append(go.Scatter(
