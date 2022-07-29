@@ -48,9 +48,9 @@ def R2(pH, T, NiH2cit, H3cit): #NiH2cit +H+ +2e = Ni +H3cit
     V2 = []
     if type(pH) == list:  # for list(vector), below is only for single value
         for pHval in pH:
-            V2.append(E_theta_2 -(C2*pHval)/2 +(C2*np.log(NiH2cit))/2 -(C2*np.log(H3cit))/2)
+            V2.append(E_theta_2 -(C2*pHval)/2 +(C2*np.log10(NiH2cit))/2 -(C2*np.log10(H3cit))/2)
     else:
-        V2 = E_theta_2 -(C2*pH)/2 +(C2*np.log(NiH2cit))/2 -(C2*np.log(H3cit))/2
+        V2 = E_theta_2 -(C2*pH)/2 +(C2*np.log10(NiH2cit))/2 -(C2*np.log10(H3cit))/2
     return V2
 
 
@@ -61,7 +61,7 @@ def R3(pH, T, NiHcit, H3cit): #NiHcit +2H+ +2e = Ni +H3cit
     E_theta_3 = -delta_G_R3/(2*F)
     V3 = []
     for pHval in pH:
-        V3.append(E_theta_3 -(C2*2*pHval)/2 +(C2*np.log(NiHcit))/2 -(C2*np.log(H3cit))/2)
+        V3.append(E_theta_3 -(C2*2*pHval)/2 +(C2*np.log10(NiHcit))/2 -(C2*np.log10(H3cit))/2)
     return V3
 
 
@@ -72,7 +72,7 @@ def R4(pH, T, NiHcit, H2cit):  #NiHcit +H+ +2e = Ni +H2cit-
     E_theta_4 = -delta_G_R4/(2*F)
     V4 = []
     for pHval in pH:
-        V4.append(E_theta_4 -(C2*pHval)/2 +(C2*np.log(NiHcit))/2 -(C2*np.log(H2cit))/2)
+        V4.append(E_theta_4 -(C2*pHval)/2 +(C2*np.log10(NiHcit))/2 -(C2*np.log10(H2cit))/2)
     return V4
 
 
@@ -83,7 +83,7 @@ def R5(pH, T, Nicit, H2cit):  #Nicit +2H+ +2e = Ni +H2cit-
     E_theta_5 = -delta_G_R5/(2*F)
     V5 = []
     for pHval in pH:
-        V5.append(E_theta_5 -(C2*2*pHval)/2 +(C2*np.log(Nicit))/2 -(C2*np.log(H2cit))/2)
+        V5.append(E_theta_5 -(C2*2*pHval)/2 +(C2*np.log10(Nicit))/2 -(C2*np.log10(H2cit))/2)
     return V5
 
 
@@ -94,7 +94,7 @@ def R6(pH, T, Nicit, Hcit):  #Nicit +H+ +2e = Ni +Hcit-
     E_theta_6 = -delta_G_R6/(2*F)
     V6 = []
     for pHval in pH:
-        V6.append(E_theta_6 -(C2*pHval)/2 +(C2*np.log(Nicit))/2 -(C2*np.log(Hcit))/2)
+        V6.append(E_theta_6 -(C2*pHval)/2 +(C2*np.log10(Nicit))/2 -(C2*np.log10(Hcit))/2)
     return V6
 
 
@@ -103,7 +103,7 @@ def R7(T, Nicit, cit3):  #Nicit +2e = Ni +cit3-
     C2 = -C1/F
     delta_G_R7 = delta_G_cit3 - delta_G_Nicit
     E_theta_7 = -delta_G_R7/(2*F)
-    V7 = E_theta_7 +(C2*np.log(Nicit))/2 -(C2*np.log(cit3))/2
+    V7 = E_theta_7 +(C2*np.log10(Nicit))/2 -(C2*np.log10(cit3))/2
     return V7
 
 
@@ -232,37 +232,37 @@ def T8(pH,T): #Ni(OH)3 +H +e- =Ni02 +H2O
 
 
 def V1(H3cit): #Ni2+ +H3cit= NiH2it+ H+
-    pH_V1 = (-np.log(k1*k4) - np.log(H3cit))
+    pH_V1 = (-np.log10(k1*k4) - np.log10(H3cit))
     return pH_V1
 
 
 def V2(): #H3cit=H+ +H2cit
-    pH_V2 = -np.log(k1)
+    pH_V2 = -np.log10(k1)
     return pH_V2
 
 
 def V3():  #NiH2cit = NiHcit + H+
-    pH_V3 = -np.log(k2*k5/k6)
+    pH_V3 = -np.log10(k2*k5/k6)
     return pH_V3
 
 
 def V4(): #NiHcit = Nicit + H+
-    pH_V4 = -np.log(k3*k1/k5)
+    pH_V4 = -np.log10(k3*k1/k5)
     return pH_V4
 
 
 def V5(): #H2cit=H+ +Hcit
-    pH_V5 =-np.log(k2)
+    pH_V5 =-np.log10(k2)
     return pH_V5
 
 
 def V6(): #Hcit=H+ cit3
-    pH_V6 =-np.log(k3)
+    pH_V6 =-np.log10(k3)
     return pH_V6
 
 
 def V7(Nicit,cit3): #Nicit +2H2o = Nio2+ 2H+ +cit3
-    pH_V7 = -0.5*((np.log(Nicit/cit3)+(11.85+np.log(k4))))
+    pH_V7 = -0.5*((np.log10(Nicit/cit3)+(11.85+np.log10(k4))))
     return pH_V7
 
 
