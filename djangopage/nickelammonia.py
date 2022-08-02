@@ -54,7 +54,7 @@ app.layout = html.Div([
             id='ammonia_dropdown',
             min=0.0,
             max=3.0,
-            value=1.0,
+            value=1.2,
             step=0,
             marks={i: str(i) for i in [0, 0.1, 0.2, 0.3,
                 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5,
@@ -602,8 +602,8 @@ def speciation_graph(nitotal, ntotal):
         datasets = [[i[0] for i in nplot], [i[0] for i in nhpplot], [i[0] for i in nin4p2plot],
                 [i[0] for i in nin6p2plot], nip2plot, [i[0] for i in nip2pptplot]]
         name = ['NH<sub>3</sub>', 'NH<sub>4</sub><sup>+</sup>', '[Ni(NH<sub>3</sub>)<sub>4</sub>]<sup>2+</sup>', '[Ni(NH<sub>3</sub>)<sub>6</sub>]<sup>2+</sup>', 'Ni<sup>2+</sup>', 'Ni(OH)<sub>2</sub>']
-        fill = [None, None, 'tozeroy', 'tozeroy', None, 'tozeroy']
-        color = ['rgb(90, 0, 100)', 'rgb(40, 130, 80)', 'rgb(9, 0, 0)', 'rgb(63, 63, 191)', 'rgb(191, 63, 63)', 'rgb(243, 238, 77)']
+        fill = [None, None, None, None, None, None]
+        color = ['rgb(90, 0, 100)', 'rgb(40, 130, 80)', 'rgb(245, 137, 22)', 'rgb(63, 63, 191)', 'rgb(191, 63, 63)', 'rgb(15, 15, 15)']
     elif ntotal == 0.0:
         datasets = [nip2plot, nip2pptplot]
         name = ['Ni<sup>2+</sup>', 'Ni(OH)<sub>2</sub>']

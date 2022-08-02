@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 from scipy.optimize import fsolve
 from django_plotly_dash import DjangoDash
 
-app1 = DjangoDash('nickelpure', add_bootstrap_links=True)
+app1 = DjangoDash('copper', add_bootstrap_links=True)
 # app1.css.append_css({
 #     'external_url': 'https://codepen.io/chriddyp/pen/bWLwgP.css'
 # })
@@ -25,9 +25,9 @@ app1.layout = html.Div([
         ),
 
     html.Div([
-        html.H6(u"Total nickelcitrate concentration (kmolm\u207B\u00B3):"),
+        html.H6(u"Total copper concentration (kmolm\u207B\u00B3):"),
         dcc.Slider(
-            id='nickel_slider',
+            id='copper_slider',
             min=0.1,
             max=2.0,
             value=1.1,
@@ -48,7 +48,7 @@ app1.layout = html.Div([
     html.Div([
         html.Div([
             dcc.Graph(
-                #animate=True,
+                # animate=True,
                 id='nickelpure speciation',
                 )
         ],
@@ -88,7 +88,7 @@ app1.layout = html.Div([
 
 @app1.callback(
     Output('nickelpure potential', 'figure'), ##figure????
-    [Input('nickel_slider', 'value')])
+    [Input('copper_slider', 'value')])
 
 
 def nickelpure(nitotal):
@@ -331,7 +331,7 @@ def nickelpure(nitotal):
 
 @app1.callback(
     Output('nickelpure speciation', 'figure'),
-    [Input('nickel_slider', 'value')])
+    [Input('copper_slider', 'value')])
 def nickelpure1(nitotal):
     def concs(pH, nitotal):
         logk = 11.96
