@@ -92,22 +92,7 @@ app1.layout = html.Div([
 
 
 def nickelpure(nitotal):
-
-    def concs(pH, nitotal):
-        logk = 11.96
-        f = 10**(logk - 2*pH)
-        nip2free = f/(1+f/nitotal)
-        nio2 = nitotal - nip2free
-        return [nip2free, nio2]
-
     pH_x = np.linspace(0, 14, 50)
-    nip2freeplot = []
-    nio2plot = []
-    for pHval in pH_x:
-        nip2freeplot.append(concs(pHval, nitotal)[0])
-        nio2plot.append(concs(pHval, nitotal)[1])
-
-
     def trace_generator(pH_x, nip2, nip2ppt, nin4p2, nin6p2, n, nhp, T_):
 
         def interceptgenerator(pH_x, nip2, nin4p2, nin6p2, n, nhp, T_):
@@ -333,9 +318,9 @@ def nickelpure(nitotal):
     Output('nickelpure speciation', 'figure'),
     [Input('nickel_slider', 'value')])
 def nickelpure1(nitotal):
-    def concs(pH, nitotal):
+    def concs(pH_x, nitotal):
         logk = 11.96
-        f = 10**(logk - 2*pH)
+        f = 10**(logk - 2*pH_x)
         nip2free = f/(1+f/nitotal)
         nio2 = nitotal - nip2free
         return [nip2free, nio2]
@@ -350,7 +335,7 @@ def nickelpure1(nitotal):
     datasets = [nip2freeplot, nio2plot]
     name = ['Ni<sup>2+</sup>', 'Ni(OH)<sub>2</sub>']
     fill = [None for i in range(len(name))]
-    color = ['rgb(210, 80, 80)', 'rgb(243, 238, 77)']
+    color = ['rgb(210, 80, 80)', 'rgb(235, 154, 14)']
 
     data1 = []
     for i, dataset in enumerate(datasets):
