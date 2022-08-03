@@ -63,7 +63,7 @@
                 right: auto;
                 width: 100%;
             }
-
+            p { margin: 2px }
 
             h2.heading {
                 margin-bottom: 2px;
@@ -73,6 +73,7 @@
                 text-align: center;
                 border: 1px solid lightgrey;
             }
+
             .linkstopages {
                 margin-bottom: 2px;
                 background-color: rgb(250, 250, 250);
@@ -361,16 +362,11 @@
 
         <div class='linkstopages'>
             <h5><u>Nickel</u></h5>
-            <a href="{% url 'nickelpure' %}">Nickel-H<sub>2</sub>O</a>
-            <br></br>
-            <a href="{% url 'nickelammonia' %}">Nickel-Ammonia-H<sub>2</sub>O</a>
-            <br></br>
-            <a href="{% url 'nickelcitrate' %}">Nickel-Citrate-H<sub>2</sub>O</a>
-            <br></br>
-            <p><br></p>
+            <p><a href="{% url 'nickelpure' %}">Nickel-H<sub>2</sub>O</a> </p>
+            <p><a href="{% url 'nickelammonia' %}">Nickel-Ammonia-H<sub>2</sub>O</a ></p>
+            <p><a href="{% url 'nickelcitrate' %}">Nickel-Citrate-H<sub>2</sub>O</a> </p>
             <h5><u>Copper</u></h5>
             <a href="{% url 'copper' %}">Copper-H<sub>2</sub>O</a>
-            <br></br>
             <p><br></p>
         </div>
 
