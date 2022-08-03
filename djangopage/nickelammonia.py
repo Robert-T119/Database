@@ -24,6 +24,7 @@ app.layout = html.Div([
             'backgroundColor': '#FEFDEB',
             'padding': '-10px 0 -10px 0',
             'margin-bottom': '2px',
+            'width': '100%',
         }
         ),
 
@@ -64,7 +65,7 @@ app.layout = html.Div([
     ],
         style={
             'border': 'thin lightgrey solid',
-            'backgroundColor': 'rgb(250, 250, 250)',
+            'backgroundColor': 'rgb(250,250,250)',
             'padding': '10px 15px 10px',
             'margin-bottom': '3px',
             'width': '100%',
