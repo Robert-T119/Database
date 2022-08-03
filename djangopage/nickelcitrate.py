@@ -4,7 +4,6 @@ import dash_html_components as html
 from dash.dependencies import Input, Output
 import numpy as np
 import plotly.graph_objects as go
-from scipy.optimize import fsolve
 from django_plotly_dash import DjangoDash
 from scipy.optimize import least_squares
 

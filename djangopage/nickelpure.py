@@ -29,7 +29,7 @@ app1.layout = html.Div([
         dcc.Slider(
             id='nickel_slider',
             min=0.1,
-            max=2.0,
+            max=2.5,
             value=1.1,
             step=0,
             marks={n_activity: str(n_activity) for n_activity in [0.1, 0.2, 0.3,
