@@ -24,16 +24,16 @@ app1.layout = html.Div([
         ),
 
     html.Div([
-        html.H6(u"Total copper concentration (kmolm\u207B\u00B3):"),
+        html.H6(u"Total copper(I) concentration (kmolm\u207B\u00B3):"),
         dcc.Slider(
-            id='copper_slider',
+            id='copper_slider1',
             min=0.1,
-            max=2.5,
-            value=1.1,
+            max=2.0,
+            value=1.0,
             step=0,
             marks={n_activity: str(n_activity) for n_activity in [0.1, 0.2, 0.3,
                 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5,
-                1.6, 1.7, 1.8, 1.9, 2, 2.1, 2.2, 2.3, 2.4, 2.5]},
+                1.6, 1.7, 1.8, 1.9, 2]},
                 ),
             ],
         style={
@@ -45,10 +45,32 @@ app1.layout = html.Div([
         ),
 
     html.Div([
+        html.H6(u"Total copper(II) concentration (kmolm\u207B\u00B3):"),
+        dcc.Slider(
+            id='copper_slider2',
+            min=0.1,
+            max=2.0,
+            value=1.0,
+            step=0,
+            marks={n_activity: str(n_activity) for n_activity in [0.1, 0.2, 0.3,
+              0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4,1.5,
+              1.6, 1.7, 1.8, 1.9, 2]},
+                ),
+             ],
+        style={
+            'padding': '10px 15px 10px',
+            'border': 'thin lightgrey solid',
+            'margin-bottom': '3px',
+            'backgroundColor': 'rgb(250, 250, 250)',
+            }
+         ),
+
+
+    html.Div([
         html.Div([
             dcc.Graph(
                 # animate=True,
-                id='copperpure speciation',
+                id='copperpure1 speciation',
                 )
         ],
         style={
@@ -74,6 +96,36 @@ app1.layout = html.Div([
             'margin-right': '0px',
             'margin-bottom': '3px'
             }),
+    html.Div([
+        html.Div([
+            dcc.Graph(
+                # animate=True,
+                id='copperpure2 speciation',
+            )
+        ],
+            style={
+                'width': '48%',
+                'margin-left': '1%',
+            }
+        ),
+        html.Div([
+            dcc.Graph(id='copperpure3 speciation')
+        ],
+            style={
+                'width': '48%',
+                'margin-right': '1%',
+            }
+        )
+    ],
+        className='row',
+        style={
+            'border': 'thin lightgrey solid',
+            'backgroundColor': '#FEFDEB',
+            'padding': '0 0px 0 15px',
+            "margin-left": "0px",
+            'margin-right': '0px',
+            'margin-bottom': '3px'
+        }),
     ],
 
     style = {
@@ -87,7 +139,7 @@ app1.layout = html.Div([
 
 @app1.callback(
     Output('copperpure potential', 'figure'),
-    [Input('copper_slider', 'value')])
+    [Input('copper_slider2', 'value')])
 
 def speciation_graph(Cu_total):
     cu2p = cuo2 = Cu_total
@@ -290,29 +342,17 @@ def speciation_graph(Cu_total):
     return fig
 
 @app1.callback(
-    Output('copperpure speciation', 'figure'),
-    [Input('copper_slider', 'value')])
-def nickelpure1(Cu_total):
-    pH_x = np.linspace(0, 14, 50)
-    def concs(pH_x, Cu_total):
-        cu2p = 10 ** (8.61 - 2 * pH_x) / (1 + (10 ** (8.61 - 2 * pH_x)) /Cu_total)
-        hcuo2 = 10 ** (-17.62 + pH_x)
-        cuo2 = 10 ** (-30.76 + 2 * pH_x)
-        cuoh2 = Cu_total -cuo2 -cu2p -hcuo2
-        return [cu2p, hcuo2, cuo2, cuoh2]
+    Output('copperpure1 speciation', 'figure'),
+    [Input('copper_slider2', 'value')])
+def Copperpure1(Cu_total):
+    pH_x = np.linspace(0, 16, 70)
+    cu2p = 10 ** (6.57 - 2 * pH_x) / (1 + (10 ** (6.57 - 2 * pH_x)) / Cu_total)
+    hcuo2 = 10 ** (-19.67 + pH_x)
+    cuo2 = 10 ** (-32.81 + 2 * pH_x)
+    cuo = Cu_total - cu2p - hcuo2 - cuo2
 
-    cu2pfreeplot = []
-    hcuo2plot = []
-    cuo2plot = []
-    cuoh2plot = []
-    for pHval in pH_x:
-        cu2pfreeplot.append(concs(pHval, Cu_total)[0])
-        hcuo2plot.append(concs(pHval, Cu_total)[1])
-        cuo2plot.append(concs(pHval, Cu_total)[2])
-        cuoh2plot.append(concs(pHval, Cu_total)[3])
-
-    datasets = [cu2pfreeplot, hcuo2plot, cuo2plot, cuoh2plot]
-    name = ['Cu<sup>2+</sup>', 'HCuO<sub>2</sub>', 'CuO<sub>2</sub>', 'Cu(OH)<sub>2</sub>']
+    datasets = [cu2p, hcuo2, cuo2, cuo]
+    name = ['Cu<sup>2+</sup>', 'HCuO<sub>2</sub>', 'CuO<sub>2</sub>', 'CuO']
     fill = [None, None, None,None]
     color = ['rgb(210, 80, 80)', 'rgb(90 ,0, 100)','rgb(40, 130, 80)', 'rgb(235, 154, 14)']
 
@@ -347,16 +387,154 @@ def nickelpure1(Cu_total):
         # height=500,
     )
     fig1 = go.Figure(data=data1, layout=layout)
-    fig1.update_xaxes(gridcolor='white', range=[0, 14],
+    fig1.update_xaxes(gridcolor='white', range=[0, 16],
                      nticks=20, mirror=True, ticks='outside', showline=True)
     fig1.update_yaxes(gridcolor='white', ticks='outside',
                     range=[0, Cu_total*1.05])
     fig1.update_layout(
         title={
-            'text': "Speciation plot",
+            'text': "Speciation plot [Cu(II)/CuO]",
             'y': 0.95,
             'x': 0.45,
             'xanchor': 'center',
             'yanchor': 'top'
             })
     return fig1
+
+@app1.callback(
+    Output('copperpure2 speciation', 'figure'),
+    [Input('copper_slider2', 'value')])
+def nickelpure1(Cu_total):
+    pH_x = np.linspace(0, 14, 50)
+    def concs(pH_x, Cu_total):
+        cu2p = 10 ** (8.61 - 2 * pH_x) / (1 + (10 ** (8.61 - 2 * pH_x)) /Cu_total)
+        hcuo2 = 10 ** (-17.62 + pH_x)
+        cuo2 = 10 ** (-30.76 + 2 * pH_x)
+        cuoh2 = Cu_total -cuo2 -cu2p -hcuo2
+        return [cu2p, hcuo2, cuo2, cuoh2]
+
+    cu2pfreeplot = []
+    hcuo2plot = []
+    cuo2plot = []
+    cuoh2plot = []
+    for pHval in pH_x:
+        cu2pfreeplot.append(concs(pHval, Cu_total)[0])
+        hcuo2plot.append(concs(pHval, Cu_total)[1])
+        cuo2plot.append(concs(pHval, Cu_total)[2])
+        cuoh2plot.append(concs(pHval, Cu_total)[3])
+
+    datasets = [cu2pfreeplot, hcuo2plot, cuo2plot, cuoh2plot]
+    name = ['Cu<sup>2+</sup>', 'HCuO<sub>2</sub>', 'CuO<sub>2</sub>', 'Cu(OH)<sub>2</sub>']
+    fill = [None, None, None,None]
+    color = ['rgb(210, 80, 80)', 'rgb(90 ,0, 100)','rgb(40, 130, 80)', 'rgb(235, 154, 14)']
+
+    data2 = []
+    for i, dataset in enumerate(datasets):
+        data2.append(go.Scatter(
+            x=pH_x,
+            y=dataset,
+            mode='lines',
+            hoverinfo='skip',
+            fill=fill[i],
+            name=name[i],
+            showlegend=True,
+            line=dict(
+                shape='spline',
+                width=2.5,
+                color=color[i]
+            )
+        ))
+
+    layout = go.Layout(
+        xaxis={'title': 'pH', 'linecolor': 'grey', 'mirror':True},
+        yaxis={'title': 'Concentration (kmolm<sup>-3</sup>)', 'linecolor': 'grey',
+            'mirror':True},
+        # transition = {'duration': 1200},
+        font=dict(family='Courier Sans', color='grey'),
+        margin={'t': 50, 'l':10},
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgb(240,240,240)',
+        autosize=False,
+        # width=600,
+        # height=500,
+    )
+    fig2 = go.Figure(data=data2, layout=layout)
+    fig2.update_xaxes(gridcolor='white', range=[0, 14],
+                     nticks=20, mirror=True, ticks='outside', showline=True)
+    fig2.update_yaxes(gridcolor='white', ticks='outside',
+                    range=[0, Cu_total*1.05])
+    fig2.update_layout(
+        title={
+            'text': "Speciation plot [Cu(II)/Cu(OH)<sub>2</sub>]",
+            'y': 0.95,
+            'x': 0.45,
+            'xanchor': 'center',
+            'yanchor': 'top'
+            })
+    return fig2
+
+@app1.callback(
+    Output('copperpure3 speciation', 'figure'),
+    [Input('copper_slider1', 'value')])
+def nickelpure1(Cu_total):
+    pH_x = np.linspace(0, 16, 50)
+    def concs(pH_x, Cu_total):
+        cup = 10 ** (-1.01 - pH_x)
+        cu2o = Cu_total - cup
+        return [cup, cu2o]
+
+    cupfreeplot = []
+    cu2oplot = []
+    for pHval in pH_x:
+        cupfreeplot.append(concs(pHval, Cu_total)[0])
+        cu2oplot.append(concs(pHval, Cu_total)[1])
+
+    datasets = [cupfreeplot, cu2oplot]
+    name = ['Cu<sup>+</sup>', 'Cu<sub>2</sub>O']
+    fill = [None, None, None,None]
+    color = ['rgb(210, 80, 80)', 'rgb(90 ,0, 100)']
+
+    data3 = []
+    for i, dataset in enumerate(datasets):
+        data3.append(go.Scatter(
+            x=pH_x,
+            y=dataset,
+            mode='lines',
+            hoverinfo='skip',
+            fill=fill[i],
+            name=name[i],
+            showlegend=True,
+            line=dict(
+                shape='spline',
+                width=2.5,
+                color=color[i]
+            )
+        ))
+
+    layout = go.Layout(
+        xaxis={'title': 'pH', 'linecolor': 'grey', 'mirror':True},
+        yaxis={'title': 'Concentration (kmolm<sup>-3</sup>)', 'linecolor': 'grey',
+            'mirror':True},
+        # transition = {'duration': 1200},
+        font=dict(family='Courier Sans', color='grey'),
+        margin={'t': 50, 'l':10},
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgb(240,240,240)',
+        autosize=False,
+        # width=600,
+        # height=500,
+    )
+    fig3 = go.Figure(data=data3, layout=layout)
+    fig3.update_xaxes(gridcolor='white', range=[0, 16],
+                     nticks=20, mirror=True, ticks='outside', showline=True)
+    fig3.update_yaxes(gridcolor='white', ticks='outside',
+                    range=[0, Cu_total*1.05])
+    fig3.update_layout(
+        title={
+            'text': "Speciation plot [Cu(I)/Cu<sub>2</sub>O]",
+            'y': 0.95,
+            'x': 0.45,
+            'xanchor': 'center',
+            'yanchor': 'top'
+            })
+    return fig3
