@@ -18,7 +18,7 @@ from django.conf.urls import url
 from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
-from . import nickelammonia, nickelpure, nickelcitrate, copper
+from . import nickelammonia, nickelpure, nickelcitrate, copper, nickelca
 
 
 urlpatterns = [
@@ -27,6 +27,7 @@ urlpatterns = [
     path('nickelcitrate/', include('nickelcitrate.urls')),
     path('nickelpure/', include('nickelpure.urls')),
     path('copper/', include('copper.urls')),
+    path('nickelca/', include('nickelca.urls')),
     path('', include('home.urls')),
     path('django_plotly_dash/', include('django_plotly_dash.urls')),
     # url(r'^\.well-known/', include('letsencrypt.urls')),

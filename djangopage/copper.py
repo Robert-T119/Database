@@ -1,4 +1,4 @@
-from djangopage.reactions3 import *
+from djangopage.reactions2 import *
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output

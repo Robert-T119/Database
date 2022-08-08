@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'nickelcitrate.apps.NickelcitrateConfig',
     'nickelammonia.apps.NickelammoniaConfig',
     'nickelpure.apps.NickelpureConfig',
+    'nickelca.apps.NickelcaConfig',
     'copper.apps.CopperConfig',
     'home.apps.HomeConfig',
     'letsencrypt',

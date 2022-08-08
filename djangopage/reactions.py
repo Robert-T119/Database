@@ -80,7 +80,7 @@ def R5(n, nin4p2, T): #Ni(NH3)4(2+) +2e- = Ni +4NH3
     delta_G_R5_0 = 4*delta_G_n - delta_G_nin4p2
     delta_G_R5 = (T*delta_G_R5_0/298)+T*deltah5*((1/T)-(1/298))
     E_theta_5 = -delta_G_R5/(2*F)
-    V5 = append(E_theta_5 - (C2*4*np.log10(n)/2) + (C2*np.log10(nin4p2)/2))
+    V5 = E_theta_5 - (C2*4*np.log10(n)/2) + (C2*np.log10(nin4p2)/2)
     return V5
 
 

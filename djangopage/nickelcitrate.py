@@ -1,4 +1,4 @@
-from djangopage.reactions2 import *
+from djangopage.reactions1 import *
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
@@ -33,7 +33,7 @@ app.layout = html.Div([
             id='nickel_slider',
             min=0.1,
             max=3.0,
-            value=0.1,
+            value=1,
             step=0,
             marks={n_activity: str(n_activity) for n_activity in [0.1,0.2, 0.3,
                 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5,
@@ -54,7 +54,7 @@ app.layout = html.Div([
             id='citrate_dropdown',
             min=0,
             max=3.0,
-            value=0.5,
+            value=1,
             step=0,
             marks={n_activity: str(n_activity) for n_activity in [0, 0.1, 0.2, 0.3,
                 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5,
@@ -546,7 +546,7 @@ def speciation_graph(ni_total, citrate_total):
                 F[0] = citrate_total - Hcit - H2cit - H3cit - Nicit - NiHcit - NiH2cit - cit3
                 F[1] = ni_total - Nicit - NiHcit - NiH2cit - ni2pfree - nio2
                 return F
-            res = least_squares(f, (0.1, 0.1), bounds=((0, 0), (1, 1)))
+            res = least_squares(f, (0.1, 0.1), bounds=((0, 0), (1, 1)),method='dogbox',xtol=1e-11)
             cit3 = res.x[0]
             nio2 = res.x[1]
             ni2pfree = (nio2 * k1 * (h ** 2)) / (1 + ((nio2 * k1 * (h ** 2)) / ni_total))
