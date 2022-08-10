@@ -34,7 +34,7 @@ app.layout = html.Div([
             id='nickel_slider',
             min=0.1,
             max=3.0,
-            value=1.0,
+            value=1.2,
             step=0,
             marks={n_activity: str(n_activity) for n_activity in [0.1, 0.2, 0.3,
                 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5,
@@ -56,7 +56,7 @@ app.layout = html.Div([
                 id='citrate_slider',
                 min=0.1,
                 max=3.0,
-                value=1.1,
+                value=1.3,
                 step=0,
                 marks={n_activity: str(n_activity) for n_activity in [0.1, 0.2, 0.3,
                     0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5,
@@ -78,7 +78,7 @@ app.layout = html.Div([
             id='ammonia_dropdown',
             min=0.1,
             max=3.0,
-            value=2.8,
+            value=1.4,
             step=0,
             marks={i: str(i) for i in [0.1, 0.2, 0.3,
                 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5,
@@ -219,10 +219,8 @@ def speciation_graph(ni_total, citrate_total,ammonia_total):
         nin4p2plot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[11])
         nin6p2plot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[12])
 
-    datasets= [cit3plot, nio2plot, nh4plot, ni2pplot, Hcitplot, H2citplot, H3citplot, NiH2citplot, NiHcitplot,
-             Nicitplot,nh3plot, nin4p2plot, nin6p2plot]
-    name = ['cit3', 'nio2', 'nh4', 'Ni2+', 'Hcit', 'H2cit', 'H3cit', 'NiH2cit', 'NiHcit', 'Nicit', 'nh3', 'Ni(Nh4)4 2+',
-            'Ni(NH4)6 2+']
+    datasets= [cit3plot, nio2plot, nh4plot, ni2pplot, Hcitplot, H2citplot, H3citplot, NiH2citplot, NiHcitplot,Nicitplot,nh3plot, nin4p2plot, nin6p2plot]
+    name = ['cit3', 'nio2', 'nh4', 'Ni2+', 'Hcit', 'H2cit', 'H3cit', 'NiH2cit', 'NiHcit', 'Nicit', 'nh3', 'Ni(Nh4)4 2+','Ni(NH4)6 2+']
     fill = [None, None, None, None, None, None, None, None, None, None, None, None,None, None, None]
     color = ['rgb(90, 0, 100)', 'rgb(40, 130, 80)', 'rgb(245, 137, 22)', 'rgb(63, 63, 191)', 'rgb(191, 63, 63)', 'rgb(15, 15, 15)',
              'rgb(235, 64, 52)','rgb(137, 232, 186)','rgb(204, 75, 131)','rgb(14, 10, 209)','rgb(172, 51, 232)','rgb(2, 92, 8)','rgb(219, 140, 176)']
@@ -358,7 +356,7 @@ def speciation_graph(ni_total, citrate_total, ammonia_total):
         nh3plot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[10])
         nin4p2plot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[11])
         nin6p2plot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[12])
-    #####################################################################################################
+     ###########################################################################################################################
     NiH2cit = NiHcit = Nicit = ni2pfree = nio2 = ni_total
     cit3 = Hcit = H2cit = H3cit = citrate_total
     nh3 = nh4 = ammonia_total
