@@ -603,8 +603,7 @@ def speciation_graph(ni_total, citrate_total, ammonia_total):
                 x_data_2[5])
             nio3regiony = list(np.linspace(T12(14, T_), 2.6, 5)) + list([2.6 for i in range(0, 5)]) + list(
                 np.linspace(T1(ni2pfree, 0, 298), 2.6, 5)) + list(y_data_top_1[0]) + list(y_data_top_1[1]) + list(
-                y_data_top_1[2]) + list(
-                np.linspace(T11(inters_1[5][0], Nicit, cit3, T_), T4(inters_2[2][0], nh4, nin6p2, T_), 5)) + list(
+                y_data_top_1[2]) + list(np.linspace(T11(inters_1[5][0], Nicit, cit3, T_), T4(inters_2[2][0], nh4, nin6p2, T_), 5)) + list(
                 y_data_top_2[3]) + list(y_data_top_2[4]) + list(y_data_top_2[5])
 
             niregionx = list([14 for i in range(0, 5)]) + list(reversed(np.linspace(0, 14, 5))) + list(
