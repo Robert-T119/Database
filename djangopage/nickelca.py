@@ -76,9 +76,9 @@ app.layout = html.Div([
         html.H6(u'Total ammonia concentration (kmolm\u207B\u00B3):'),
         dcc.Slider(
             id='ammonia_dropdown',
-            min=0.1,
+            min=0,
             max=3.0,
-            value=1.4,
+            value=0,
             step=0,
             marks={i: str(i) for i in [0.1, 0.2, 0.3,
                 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5,
@@ -642,8 +642,7 @@ def speciation_graph(ni_total, citrate_total, ammonia_total):
                 np.linspace(T11(inters_1[5][0], Nicit, cit3, T_), T4(inters_2[2][0], nh4, nin6p2, T_), 5))) + list(
                 reversed(y_data_top_1[5])) + list(reversed(y_data_top_1[4]))
 
-            nio2regionx1 = list(x_data_2[1]) + list(x_data_verticals_2[0]) + list(x_data_2[1]) + list(
-                x_data_verticals_2[1])
+            nio2regionx1 = list(x_data_2[1]) + list(x_data_verticals_2[0]) + list(x_data_2[1]) + list(x_data_verticals_2[1])
             nio2regiony1 = list(y_data_bottom_2[1]) + list(vys_2[0]) + list(y_data_top_2[1]) + list(reversed(vys_2[1]))
 
             nin4p2regionx = list(x_data_verticals_2[1]) + list(x_data_2[2]) + list(x_data_verticals_2[2]) + list(
@@ -766,8 +765,8 @@ def speciation_graph(ni_total, citrate_total, ammonia_total):
                 [14 for i in range(0, 5)])
             nio2regiony = list(reversed(y_data_bottom_1[7])) + list(vys_1[6]) + list(y_data_top_1[7]) + list(
                 np.linspace(R12(14, T_), T12(14, T_), 5))
-            xs = [niregionx,nio3regiony,nip2regionx, NiH2citregionx, NiHcitregionx, Nicitregionx, nio2regionx]
-            ys = [niregionx,nio3regiony,nip2regiony, NiH2citregiony, NiHcitregiony, Nicitregiony, nio2regiony]
+            xs = [niregionx,nio3regionx,nip2regionx, NiH2citregionx, NiHcitregionx, Nicitregionx, nio2regionx]
+            ys = [niregiony,nio3regiony,nip2regiony, NiH2citregiony, NiHcitregiony, Nicitregiony, nio2regiony]
 
         elif status == 3:
             nio3regionx = list(new_x_bottom_1) + list([14 for i in range(0, 5)]) + list(
@@ -810,8 +809,8 @@ def speciation_graph(ni_total, citrate_total, ammonia_total):
                 [14 for i in range(0, 5)])
             nio2regiony = list(reversed(y_data_bottom_1[7])) + list(vys_1[6]) + list(y_data_top_1[7]) + list(
                 np.linspace(R12(14, T_), T12(14, T_), 5))
-            xs = [niregionx,nio3regiony,nip2regionx, NiH2citregionx, NiHcitregionx, Nicitregionx, nio2regionx]
-            ys = [niregionx,nio3regiony,nip2regiony, NiH2citregiony, NiHcitregiony, Nicitregiony, nio2regiony]
+            xs = [niregionx,nio3regionx,nip2regionx, NiH2citregionx, NiHcitregionx, Nicitregionx, nio2regionx]
+            ys = [niregiony,nio3regiony,nip2regiony, NiH2citregiony, NiHcitregiony, Nicitregiony, nio2regiony]
         return [xs, ys]
     # end function, return data to add to traces, should already be in correct form to
     # cooperate with dash notation

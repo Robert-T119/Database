@@ -4,7 +4,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output
 import numpy as np
 import plotly.graph_objects as go
-from scipy.optimize import fsolve
+from scipy.optimize import least_squares
 from django_plotly_dash import DjangoDash
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -131,20 +131,25 @@ def speciation_graph(nitotal, ntotal):
     def species1(pH_x, ntotal, nitotal):
         h = 10**(-pH_x)
         if ntotal != 0.0:
-            f = 10**(logk - 2 * pH_x)
-            nip2free = f/(1+f/nitotal)
-            h = 10**(-pH_x)
-            def solve1(nhp):
-                nin4p2 = k4*(nhp**(4))/((h)**(2))
-                nin6p2 = k5*(nhp**(6))/((h)**(4))
-                return (ntotal-nhp-k2*nhp/h-4*nin4p2-6*nin6p2)
-            nhp = fsolve(solve1,0.5)
-            nh3 = k2*nhp/h
-            nin4p2 =k4*(nhp**(4))/((h)**(2))
-            nin6p2 = k5*(nhp**(6))/((h)**(4))
-            nio2 = nitotal-nin4p2-nin6p2-nip2free
+            def equations(p):
+                nhp, nio2 = p
+                f = 10 ** (logk - 2 * pH_x)
+                nip2free = f / (1 + f / nitotal)
+                nh3 = k2 * nhp / h
+                nin4p2 = k4 * nio2 * (nhp ** 4) / (h ** 2)
+                nin6p2 = k5 * nio2 * (nhp ** 6) / (h ** 4)
+                return (ntotal - nh3 - 4 * nin4p2 - 6 * nin6p2 - nhp,
+                        nitotal - nip2free - nin4p2 - nin6p2 - nio2)
+            res = least_squares(equations, (0.1, 0.1), bounds=((0, 0), (ntotal,nitotal )),method='dogbox',xtol=1e-12)
+            nhp = res.x[0]
+            nio2 = res.x[1]
+            f = 10 ** (logk - 2 * pH_x)
+            nip2free = f / (1 + f / nitotal)
+            nh3 = k2 * nhp / h
+            nin4p2 = k4 * nio2 * (nhp ** 4) / (h ** 2)
+            nin6p2 = k5 * nio2 * (nhp ** 6) / (h ** 4)
         elif ntotal == 0.0:
-            f = 10**(logk - 2 * pH_x)
+            f = 10 ** (logk - 2 * pH_x)
             nip2free = f/(1+f/nitotal)
             nio2 = nitotal - nip2free
             nin4p2 = nin6p2 = nh3 = nhp = 0
@@ -171,11 +176,11 @@ def speciation_graph(nitotal, ntotal):
     nip2 = nip2ppt = nitotal
     nhp = n = ntotal
     if nip2 <= nhp / 4:
-        nin4p2 = nip2
+        nin4p2 = ntotal
     else:
         nin4p2 = nhp / 4
     if nip2 <= nhp / 6:
-        nin6p2 = nip2
+        nin6p2 = ntotal
     else:
         nin6p2 = nhp / 6
 
@@ -563,23 +568,29 @@ def speciation_graph(nitotal, ntotal):
     k5 = 10 ** (-35.91)
     logk = 11.96
     K0 = 5.65 * 10 ** (-10)
+    pH_x = np.linspace(0.1, 14, 50)
     #----------------------------------------------------------------------------------------------
     # begin first function, output all species concentrations. One concentration for each pH value.
     def species1(pH_x, ntotal, nitotal):
         h = 10**(-pH_x)
         if ntotal != 0.0:
-            f = 10**(logk - 2 * pH_x)
-            nip2free = f/(1+f/nitotal)
-            h = 10**(-pH_x)
-            def solve1(nhp):
-                nin4p2 = k4*(nhp**(4))/((h)**(2))
-                nin6p2 = k5*(nhp**(6))/((h)**(4))
-                return (ntotal-nhp-k2*nhp/h-4*nin4p2-6*nin6p2)
-            nhp = fsolve(solve1,0.5)
-            nh3 = k2*nhp/h
-            nin4p2 =k4*(nhp**(4))/((h)**(2))
-            nin6p2 = k5*(nhp**(6))/((h)**(4))
-            nio2 = nitotal-nin4p2-nin6p2-nip2free
+            def equations(p):
+                nhp, nio2 = p
+                f = 10 ** (logk - 2 * pH_x)
+                nip2free = f / (1 + f / nitotal)
+                nh3 = k2 * nhp / h
+                nin4p2 = k4 * nio2 * (nhp ** 4) / (h ** 2)
+                nin6p2 = k5 * nio2 * (nhp ** 6) / (h ** 4)
+                return (ntotal - nh3 - 4 * nin4p2 - 6 * nin6p2 - nhp,
+                        nitotal - nip2free - nin4p2 - nin6p2 - nio2)
+            res = least_squares(equations, (0.1, 0.1), bounds=((0, 0), (ntotal,nitotal)),method='dogbox',xtol=1e-12)
+            nhp = res.x[0]
+            nio2 = res.x[1]
+            f = 10 ** (logk - 2 * pH_x)
+            nip2free = f / (1 + f / nitotal)
+            nh3 = k2 * nhp / h
+            nin4p2 = k4 * nio2 * (nhp ** 4) / (h ** 2)
+            nin6p2 = k5 * nio2 * (nhp ** 6) / (h ** 4)
         elif ntotal == 0.0:
             f = 10**(logk - 2 * pH_x)
             nip2free = f/(1+f/nitotal)
@@ -602,8 +613,7 @@ def speciation_graph(nitotal, ntotal):
         nip2plot.append(species1(pHval, ntotal, nitotal)[4])
         nip2pptplot.append(species1(pHval, ntotal, nitotal)[5])
     if ntotal != 0.0:
-        datasets = [[i[0] for i in nplot], [i[0] for i in nhpplot], [i[0] for i in nin4p2plot],
-                [i[0] for i in nin6p2plot], nip2plot, [i[0] for i in nip2pptplot]]
+        datasets = [nplot,nhpplot,nin4p2plot,nin6p2plot,nip2plot,nip2pptplot]
         name = ['NH<sub>3</sub>', 'NH<sub>4</sub><sup>+</sup>', '[Ni(NH<sub>3</sub>)<sub>4</sub>]<sup>2+</sup>', '[Ni(NH<sub>3</sub>)<sub>6</sub>]<sup>2+</sup>', 'Ni<sup>2+</sup>', 'Ni(OH)<sub>2</sub>']
         fill = [None, None, None, None, None, None]
         color = ['rgb(90, 0, 100)', 'rgb(40, 130, 80)', 'rgb(245, 137, 22)', 'rgb(63, 63, 191)', 'rgb(191, 63, 63)', 'rgb(15, 15, 15)']
