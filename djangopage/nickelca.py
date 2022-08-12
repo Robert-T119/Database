@@ -78,9 +78,9 @@ app.layout = html.Div([
             id='ammonia_dropdown',
             min=0,
             max=3.0,
-            value=0,
+            value=1.2,
             step=0,
-            marks={i: str(i) for i in [0.1, 0.2, 0.3,
+            marks={i: str(i) for i in [0,0.1, 0.2, 0.3,
                 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5,
                 1.6, 1.7, 1.8, 1.9, 2, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3]},
         ),
@@ -377,21 +377,16 @@ def speciation_graph(ni_total, citrate_total, ammonia_total):
             i = nin4p2plot.index(maxnin4p2)
             maxnin6p2 = max(nin6p2plot)
             j = nin6p2plot.index(maxnin6p2)
-            if maxnin6p2 > ni2pplot[j] and maxnin4p2 > ni2pplot[i]:
+            if maxnin6p2 > nio2plot[j] and maxnin4p2 > nio2plot[i]:
                 status = 0
-            elif maxnin6p2 > ni2pplot[j] and maxnin4p2 < ni2pplot[i]:
+            elif maxnin6p2 > nio2plot[j] and maxnin4p2 < nio2plot[i]:
                 status = 1
-            elif maxnin6p2 < ni2pplot[j] and maxnin4p2 > ni2pplot[i]:
-                status = 2
-            elif maxnin6p2 < ni2pplot[j] and maxnin4p2 < ni2pplot[i]:
+            elif maxnin6p2 < nio2plot[j] and maxnin4p2 < nio2plot[i]:
                 status = 3
         elif ammonia_total == 0.0:
             status = 3
         return status
     status = nio2checker(nin4p2plot, nin6p2plot, ni2pplot, ammonia_total)
-    # nio2checker(nin4p2plot, nin6p2plot, nip2pptplot)
-    # nio2checker returns status. This can take 4 values, depending on what will be shown inside
-    # the ni(oh)2 region
     # --------------------------------------------------------------------------------------------------------------
     def trace_generator(pH_x, ni2pfree, NiH2cit, NiHcit, Nicit, H3cit, H2cit, Hcit, cit3, nin4p2, nin6p2,nh4,nh3,nio2, T_):
         def interceptgenerator1(pH_x, ni2pfree, NiH2cit, NiHcit, Nicit, H3cit, H2cit, Hcit, cit3, T_):
@@ -426,8 +421,6 @@ def speciation_graph(ni_total, citrate_total, ammonia_total):
             elif status == 1:
                 bottom_eqs_2 = [[R1(ni2pfree, T_) for i in range(len(pH_x))], R2(pH_x, T_),
                                 R4(pH_x, nh4, nin6p2, T_), [R5(nh3, nin6p2, T_) for i in range(len(pH_x))],R2(pH_x, T_)]
-            elif status == 2:
-                bottom_eqs_2 = [[R1(ni2pfree, T_) for i in range(len(pH_x))], R2(pH_x, T_), R3(pH_x, nh4, nin4p2, T_)]
 
             elif status == 3 or ammonia_total == 0.0:
                 bottom_eqs_2 = [[R1(ni2pfree, T_) for i in range(len(pH_x))], R2(pH_x, T_)]
@@ -503,8 +496,6 @@ def speciation_graph(ni_total, citrate_total, ammonia_total):
         elif status == 1:
             y_data_bottom_2 = [[R1(ni2pfree, T_) for i in range(len(x_data_2[0]))], R2(x_data_2[1], T_),
                                R4(x_data_2[2], nh4, nin6p2, T_), [R5(nh3, nin6p2, T_) for i in range(len(x_data_2[3]))],R2(x_data_2[4], T_)]
-        elif status == 2:
-            y_data_bottom_2 = [[R1(ni2pfree, T_) for i in range(len(x_data_2[0]))], R2(x_data_2[1], T_), R3(x_data_2[2], nh4, nin4p2, T_),R2(x_data_2[3], T_)]
         elif status == 3 or ammonia_total == 0.0:
             y_data_bottom_2 = [[R1(ni2pfree, T_) for i in range(len(x_data_2[0]))], R2(x_data_2[1], T_)]
 
@@ -538,9 +529,7 @@ def speciation_graph(ni_total, citrate_total, ammonia_total):
         elif status == 1:
             y_data_top_2 = [T1(ni2pfree, x_data_2[0], T_), T2(x_data_2[1], T_),
                             T4(x_data_2[2], nh4, nin6p2, T_), T5(nh4, x_data_2[3], nin6p2, T_), T2(x_data_2[4], T_)]
-        elif status == 2:
-            y_data_top_2 = [T1(ni2pfree, x_data_2[0], T_), T2(x_data_2[1], T_), T3(nh4, nin4p2, x_data_2[2], T_),
-                          T2(x_data_2[3], T_)]
+
         elif status == 3 or ammonia_total == 0.0:
             y_data_top_2 = [T1(ni2pfree, x_data_2[0], T_), T2(x_data_2[1], T_)]
 
@@ -577,10 +566,10 @@ def speciation_graph(ni_total, citrate_total, ammonia_total):
                            T3(nh4, nin4p2, inters_2[2][0], T_),T4(inters_2[3][0], nh4, nin6p2, T_), T5(nh4, inters_2[4][0], nin6p2, T_)]
         elif status == 1:
             y_interps_2 = [T1(ni2pfree, inters_2[0][0], T_), T2(inters_2[1][0], T_),T4(inters_2[2][0], nh4, nin6p2, T_), T5(nh4, inters_2[3][0], nin6p2, T_)]
-        elif status == 2:
-            y_interps_2 = [T1(ni2pfree, inters_2[0][0], T_), T2(inters_2[1][0], T_), T3(nh4, nin4p2, inters_2[2][0], T_)]
+
         elif status == 3 or ammonia_total == 0.0:
             y_interps_2 = [T1(ni2pfree, inters_2[0][0], T_)]
+
         vys_2 = []
         for i, val in enumerate(inters_2):
             vys_2.append(list(np.linspace(inters_2[i][1], y_interps_2[i], 5)))
@@ -597,74 +586,6 @@ def speciation_graph(ni_total, citrate_total, ammonia_total):
                 new_y_vert_2.append(yvalue)
 
         if status == 0:
-            nio3regionx = list([14 for i in range(0, 5)]) + list(reversed(np.linspace(0, 14, 5))) + list(
-                [0 for i in range(0, 5)]) + list(x_data_1[0]) + list(x_data_1[1]) + list(x_data_1[2]) + list(
-                np.linspace(inters_1[5][0], inters_2[2][0], 5)) + list(x_data_2[3]) + list(x_data_2[4]) + list(
-                x_data_2[5])
-            nio3regiony = list(np.linspace(T12(14, T_), 2.6, 5)) + list([2.6 for i in range(0, 5)]) + list(
-                np.linspace(T1(ni2pfree, 0, 298), 2.6, 5)) + list(y_data_top_1[0]) + list(y_data_top_1[1]) + list(
-                y_data_top_1[2]) + list(np.linspace(T11(inters_1[5][0], Nicit, cit3, T_), T4(inters_2[2][0], nh4, nin6p2, T_), 5)) + list(
-                y_data_top_2[3]) + list(y_data_top_2[4]) + list(y_data_top_2[5])
-
-            niregionx = list([14 for i in range(0, 5)]) + list(reversed(np.linspace(0, 14, 5))) + list(
-                [0 for i in range(0, 5)]) + list(x_data_1[0]) + list(x_data_1[1]) + list(x_data_1[2]) + list(
-                np.linspace(inters_1[5][0], inters_2[2][0], 5)) + list(x_data_2[3]) + list(x_data_2[4]) + list(
-                x_data_2[5])
-            niregiony = list(np.linspace(R12(14, T_), -1.8, 5)) + list([-1.8 for i in range(0, 5)]) + list(
-                np.linspace(-1.8, R1(ni2pfree, 298), 5)) + list(y_data_bottom_1[0]) + list(y_data_bottom_1[1]) + list(
-                y_data_bottom_1[2]) + list(np.linspace(inters_1[5][1], inters_2[2][1], 5)) + list(
-                y_data_bottom_2[3]) + list(y_data_bottom_2[4]) + list(y_data_bottom_2[5])
-
-            nip2regionx = list(x_data_1[0]) + list(x_data_verticals_1[0]) + list(reversed(x_data_1[0])) + list(
-                [0 for i in range(0, 5)])
-            nip2regiony = list(y_data_bottom_1[0]) + list(vys_1[0]) + list(reversed(y_data_top_1[0])) + list(
-                np.linspace(R1(ni2pfree, T_), T1(ni2pfree, 0, 298), 5))
-
-            NiH2citregionx = list(x_data_1[1]) + list(x_data_1[2]) + list(x_data_verticals_1[0]) + list(
-                x_data_1[1]) + list(
-                x_data_1[2]) + list(x_data_verticals_1[1])
-            NiH2citregiony = list(y_data_bottom_1[1]) + list(y_data_bottom_1[2]) + list(vys_1[0]) + list(
-                y_data_top_1[1]) + list(
-                y_data_top_1[2]) + list(reversed(vys_1[1]))
-
-            NiHcitregionx = list(x_data_1[3]) + list(x_data_verticals_1[1]) + list(x_data_1[3]) + list(
-                x_data_verticals_1[3])
-            NiHcitregiony = list(y_data_bottom_1[3]) + list(vys_1[1]) + list(y_data_top_1[3]) + list(reversed(vys_1[3]))
-
-            Nicitregionx = list(x_data_verticals_1[3]) + list(x_data_1[4]) + list(x_data_1[5]) + list(
-                np.linspace(inters_1[5][0], inters_2[2][0], 5)) + list(reversed(x_data_2[1])) + list(
-                x_data_verticals_2[0]) + list(x_data_2[1]) + list(
-                reversed(np.linspace(inters_1[5][0], inters_2[2][0], 5))) + list(reversed(x_data_1[5])) + list(
-                reversed(x_data_1[4]))
-            Nicitregiony = list(vys_1[3]) + list(y_data_bottom_1[4]) + list(y_data_bottom_1[5]) + list(
-                np.linspace(inters_1[5][1], inters_2[2][1], 5)) + list(reversed(y_data_bottom_2[1])) + list(
-                vys_2[0]) + list(y_data_top_2[1]) + list(reversed(
-                np.linspace(T11(inters_1[5][0], Nicit, cit3, T_), T4(inters_2[2][0], nh4, nin6p2, T_), 5))) + list(
-                reversed(y_data_top_1[5])) + list(reversed(y_data_top_1[4]))
-
-            nio2regionx1 = list(x_data_2[1]) + list(x_data_verticals_2[0]) + list(x_data_2[1]) + list(x_data_verticals_2[1])
-            nio2regiony1 = list(y_data_bottom_2[1]) + list(vys_2[0]) + list(y_data_top_2[1]) + list(reversed(vys_2[1]))
-
-            nin4p2regionx = list(x_data_verticals_2[1]) + list(x_data_2[2]) + list(x_data_verticals_2[2]) + list(
-                reversed(x_data_2[2]))
-            nin4p2regiony = list(vys_2[2]) + list(y_data_bottom_2[2]) + list(reversed(vys_2[2])) + list(y_data_top_2[2])
-
-            nin6p2regionx = list(x_data_verticals_2[2]) + list(x_data_2[3]) + list(x_data_2[4]) + list(
-                x_data_verticals_2[4]) + list(reversed(x_data_2[4])) + list(reversed(x_data_2[3]))
-            nin6p2regiony = list(vys_2[2]) + list(y_data_top_2[3]) + list(y_data_top_2[4]) + list(
-                reversed(vys_2[4])) + list(reversed(y_data_bottom_2[4])) + list(reversed(y_data_bottom_2[3]))
-
-            nio2regionx2 = list(reversed(x_data_2[5])) + list(x_data_verticals_2[4]) + list(x_data_2[5]) + list(
-                14 for i in range(0, 5))
-            nio2regiony2 = list(reversed(y_data_bottom_2[5])) + list(vys_2[4]) + list(y_data_top_2[5]) + list(
-                np.linspace(R12(14, 298), T12(14, 298), 5))
-
-            xs = [niregionx,nio3regionx,nip2regionx, nio2regionx1, NiH2citregionx, NiHcitregionx, Nicitregionx, nin4p2regionx, nin6p2regionx,
-                  nio2regionx2]
-            ys = [niregiony,nio3regiony,nip2regiony, nio2regiony1, NiH2citregiony, NiHcitregiony, Nicitregiony, nin4p2regiony, nin6p2regiony,
-                  nio2regiony2]
-
-        elif status == 1:
             nio3regionx = list([14 for i in range(0, 5)]) + list(reversed(np.linspace(0, 14, 5))) + list(
                 [0 for i in range(0, 5)]) + list(x_data_1[0]) + list(x_data_1[1]) + list(x_data_1[2]) + list(
                 np.linspace(inters_1[5][0], inters_2[2][0], 5)) + list(x_data_2[3]) + list(x_data_2[4]) + list(
@@ -689,6 +610,71 @@ def speciation_graph(ni_total, citrate_total, ammonia_total):
             nip2regiony = list(y_data_bottom_1[0]) + list(vys_1[0]) + list(reversed(y_data_top_1[0])) + list(
                 np.linspace(R1(ni2pfree, T_), T1(ni2pfree, 0, 298), 5))
 
+            NiH2citregionx = list(x_data_1[1]) + list(x_data_1[2]) + list(x_data_verticals_1[1]) + list(
+                reversed(x_data_1[1])) + list(reversed(x_data_1[2])) + list(x_data_verticals_1[0])
+            NiH2citregiony = list(y_data_bottom_1[1]) + list(y_data_bottom_1[2]) + list(vys_1[1]) + list(
+                reversed(y_data_top_1[1])) + list(reversed(y_data_top_1[2])) + list(reversed(vys_1[0]))
+
+            NiHcitregionx = list(x_data_1[3]) + list(x_data_verticals_1[3]) + list(reversed(x_data_1[3])) + list(
+                x_data_verticals_1[1])
+            NiHcitregiony = list(y_data_bottom_1[3]) + list(vys_1[3]) + list(reversed(y_data_top_1[3])) + list(
+                reversed(vys_1[1]))
+
+            Nicitregionx = list(x_data_verticals_1[3]) + list(x_data_1[4]) + list(x_data_1[5]) + list(
+                np.linspace(inters_1[5][0], inters_2[2][0], 5)) + list(reversed(x_data_2[2])) + list(
+                x_data_verticals_2[1]) + list(x_data_2[2]) + list(
+                reversed(np.linspace(inters_1[5][0], inters_2[2][0], 5))) + list(reversed(x_data_1[5])) + list(
+                reversed(x_data_1[4]))
+            Nicitregiony = list(vys_1[3]) + list(y_data_bottom_1[4]) + list(y_data_bottom_1[5]) + list(
+                np.linspace(inters_1[5][1], inters_2[2][1], 5)) + list(reversed(y_data_bottom_2[2])) + list(
+                vys_2[1]) + list(y_data_top_2[2]) + list(reversed(
+                np.linspace(T11(inters_1[5][0], Nicit, cit3, T_), T4(inters_2[2][0], nh4, nin6p2, T_), 5))) + list(
+                reversed(y_data_top_1[5])) + list(reversed(y_data_top_1[4]))
+
+            nin4p2regionx = list(x_data_verticals_2[1]) + list(x_data_2[2]) + list(x_data_verticals_2[2]) + list(
+                reversed(x_data_2[2]))
+            nin4p2regiony = list(reversed(vys_2[1])) + list(y_data_bottom_2[2]) + list(reversed(vys_2[2])) + list(
+                reversed(y_data_top_2[2]))
+
+            nin6p2regionx = list(x_data_verticals_2[2]) + list(x_data_2[3]) + list(x_data_2[4]) + list(
+                x_data_verticals_2[4]) + list(reversed(x_data_2[4])) + list(reversed(x_data_2[3]))
+            nin6p2regiony = list(vys_2[2]) + list(y_data_top_2[3]) + list(y_data_top_2[4]) + list(
+                reversed(vys_2[4])) + list(reversed(y_data_bottom_2[4])) + list(reversed(y_data_bottom_2[3]))
+
+            nio2regionx2 = list(reversed(x_data_2[5])) + list(x_data_verticals_2[4]) + list(x_data_2[5]) + list(
+                14 for i in range(0, 5))
+            nio2regiony2 = list(reversed(y_data_bottom_2[5])) + list(vys_2[4]) + list(y_data_top_2[5]) + list(
+                np.linspace(R12(14, 298), T12(14, 298), 5))
+
+            xs = [niregionx,nio3regionx,nip2regionx, NiH2citregionx, NiHcitregionx, Nicitregionx, nin4p2regionx, nin6p2regionx, nio2regionx2]
+            ys = [niregiony,nio3regiony,nip2regiony, NiH2citregiony, NiHcitregiony, Nicitregiony, nin4p2regiony, nin6p2regiony, nio2regiony2]
+            return [xs, ys, niregionx, niregiony, nio3regionx, nio3regiony]
+
+        elif status == 1:
+            nio3regionx = list([14 for i in range(0, 5)]) + list(reversed(np.linspace(0, 14, 5))) + list(
+                [0 for i in range(0, 5)]) + list(x_data_1[1]) + list(x_data_1[2]) + list(x_data_1[3]) + list(
+                x_data_1[4]) + list(x_data_1[5]) + list(np.linspace(inters_1[5][0], inters_2[2][0], 5)) + list(
+                x_data_2[3]) + list(x_data_2[4])
+            nio3regiony = list(np.linspace(T12(14, T_), 2.6, 5)) + list([2.6 for i in range(0, 5)]) + list(
+                np.linspace(2.6, T1(ni2pfree, 0, 298), 5)) + list(y_data_top_1[1]) + list(y_data_top_1[2]) + list(
+                y_data_top_1[3]) + list(y_data_top_1[4]) + list(y_data_top_1[5]) + list(
+                np.linspace(T11(inters_1[5][0], Nicit, cit3, T_), T4(inters_2[2][0], nh4, nin6p2, T_), 5)) + list(
+                y_data_top_2[3]) + list(y_data_top_2[4])
+
+            niregionx = list([14 for i in range(0, 5)]) + list(reversed(np.linspace(0, 14, 5))) + list(
+                [0 for i in range(0, 5)]) + list(x_data_1[1]) + list(x_data_1[2]) + list(x_data_1[3]) + list(
+                x_data_1[4]) + list(x_data_1[5]) + list(np.linspace(inters_1[5][0], inters_2[2][0], 5)) + list(
+                x_data_2[3]) + list(x_data_2[4])
+            niregiony = list(np.linspace(R12(14, T_), -1.8, 5)) + list([-1.8 for i in range(0, 5)]) + list(
+                np.linspace(-1.8, R1(ni2pfree, 298), 5)) + list(y_data_bottom_1[1]) + list(y_data_bottom_1[2]) + list(
+                y_data_bottom_1[3]) + list(y_data_bottom_1[4]) + list(y_data_bottom_1[5]) + list(
+                np.linspace(inters_1[5][1], inters_2[2][1], 5)) + list(y_data_bottom_2[3]) + list(y_data_bottom_2[4])
+
+            nip2regionx = list(x_data_1[0]) + list(x_data_verticals_1[0]) + list(reversed(x_data_1[0])) + list(
+                [0 for i in range(0, 5)])
+            nip2regiony = list(y_data_bottom_1[0]) + list(vys_1[0]) + list(reversed(y_data_top_1[0])) + list(
+                np.linspace(R1(ni2pfree, T_), T1(ni2pfree, 0, 298), 5))
+
             NiH2citregionx = list(x_data_1[1]) + list(x_data_1[2]) + list(x_data_verticals_1[0]) + list(
                 x_data_1[1]) + list(
                 x_data_1[2]) + list(x_data_verticals_1[1])
@@ -701,19 +687,15 @@ def speciation_graph(ni_total, citrate_total, ammonia_total):
             NiHcitregiony = list(y_data_bottom_1[3]) + list(vys_1[1]) + list(y_data_top_1[3]) + list(reversed(vys_1[3]))
 
             Nicitregionx = list(x_data_verticals_1[3]) + list(x_data_1[4]) + list(x_data_1[5]) + list(
-                np.linspace(inters_1[5][0], inters_2[2][0], 5)) + list(reversed(x_data_2[1])) + list(
-                x_data_verticals_2[0]) + list(x_data_2[1]) + list(
+                np.linspace(inters_1[5][0], inters_2[2][0], 5)) + list(reversed(x_data_2[2])) + list(
+                x_data_verticals_2[1]) + list(x_data_2[2]) + list(
                 reversed(np.linspace(inters_1[5][0], inters_2[2][0], 5))) + list(reversed(x_data_1[5])) + list(
                 reversed(x_data_1[4]))
-            Nicitregiony = list(vys_1[3]) + list(y_data_bottom_1[4]) + list(y_data_bottom_1[5]) + list(
-                np.linspace(inters_1[5][1], inters_2[2][1], 5)) + list(reversed(y_data_bottom_2[1])) + list(
-                vys_2[0]) + list(y_data_top_2[1]) + list(reversed(
+            Nicitregiony = list(reversed(vys_1[3])) + list(y_data_bottom_1[4]) + list(y_data_bottom_1[5]) + list(
+                np.linspace(inters_1[5][1], inters_2[2][1], 5)) + list(reversed(y_data_bottom_2[2])) + list(
+                vys_2[1]) + list(y_data_top_2[2]) + list(reversed(
                 np.linspace(T11(inters_1[5][0], Nicit, cit3, T_), T4(inters_2[2][0], nh4, nin6p2, T_), 5))) + list(
                 reversed(y_data_top_1[5])) + list(reversed(y_data_top_1[4]))
-
-            nio2regionx1 = list(x_data_2[1]) + list(x_data_verticals_2[0]) + list(x_data_2[1]) + list(
-                x_data_verticals_2[1])
-            nio2regiony1 = list(y_data_bottom_2[1]) + list(vys_2[0]) + list(y_data_top_2[1]) + list(reversed(vys_2[1]))
 
             nin6p2regionx = list(x_data_verticals_2[1]) + list(x_data_2[2]) + list(x_data_2[3]) + list(
                 x_data_verticals_2[3]) + list(reversed(x_data_2[3])) + list(reversed(x_data_2[2]))
@@ -725,48 +707,9 @@ def speciation_graph(ni_total, citrate_total, ammonia_total):
             nio2regiony2 = list(reversed(y_data_bottom_2[4])) + list(vys_2[3]) + list(y_data_top_2[4]) + list(
                 np.linspace(R12(14, 298), T12(14, 298), 5))
 
-            xs = [niregionx,nio3regionx,nip2regionx,nio2regionx1, NiH2citregionx, NiHcitregionx, Nicitregionx, nin6p2regionx, nio2regionx2]
-            ys = [niregiony,nio3regiony,nip2regiony,nio2regiony1, NiH2citregiony, NiHcitregiony, Nicitregiony, nin6p2regiony, nio2regiony2]
-
-        elif status == 2:
-            nio3regionx = list(new_x_bottom_1) + list([14 for i in range(0, 5)]) + list(
-                reversed(np.linspace(0, 14, 5))) + list(
-                [0 for i in range(0, 5)])
-            nio3regiony = list(new_y_top_1) + list(np.linspace(T12(14, T_), 2.6, 5)) + list(
-                [2.6 for i in range(0, 5)]) + list(
-                np.linspace(T1(ni2pfree, 0, 298), 2.6, 5))
-
-            niregionx = list(new_x_bottom_1) + list([14 for i in range(0, 5)]) + list(
-                reversed(np.linspace(0, 14, 5))) + list(
-                [0 for i in range(0, 5)])
-            niregiony = list(new_y_bottom_1) + list(np.linspace(R12(14, T_), -1.8, 5)) + list(
-                [-1.8 for i in range(0, 5)]) + list(
-                np.linspace(-1.8, R1(ni2pfree, 298), 5))
-
-            nip2regionx = list(x_data_1[0]) + list(x_data_verticals_1[0]) + list(reversed(x_data_1[0])) + list(
-                [0 for i in range(0, 5)])
-            nip2regiony = list(y_data_bottom_1[0]) + list(vys_1[0]) + list(reversed(y_data_top_1[0])) + list(
-                np.linspace(R1(nip2regionx, T_), T1(ni2pfree, 0, 298), 5))
-
-            NiH2citregionx = list(x_data_1[1]) + list(x_data_1[2]) + list(x_data_verticals_1[0]) + list(x_data_1[1]) + list(
-                x_data_1[2]) + list(x_data_verticals_1[1])
-            NiH2citregiony = list(y_data_bottom_1[1]) + list(y_data_bottom_1[2]) + list(vys_1[0]) + list(
-                y_data_top_1[1]) + list(y_data_top_1[2]) + list(reversed(vys_1[1]))
-
-            NiHcitregionx = list(x_data_1[3]) + list(x_data_verticals_1[1]) + list(x_data_1[3]) + list(x_data_verticals_1[3])
-            NiHcitregiony = list(y_data_bottom_1[3]) + list(vys_1[1]) + list(y_data_top_1[3]) + list(reversed(vys_1[3]))
-
-            Nicitregionx = list(x_data_1[4]) + list(x_data_1[5]) + list(x_data_1[6]) + list(x_data_verticals_1[3]) + list(
-                x_data_1[4]) + list(x_data_1[5]) + list(x_data_1[6]) + list(x_data_verticals_1[6])
-            Nicitregiony = list(y_data_bottom_1[4]) + list(y_data_bottom_1[5]) + list(y_data_bottom_1[6]) + list(
-                vys_1[3]) + list(y_data_top_1[4]) + list(y_data_top_1[5]) + list(y_data_top_1[6]) + list(reversed(vys_1[6]))
-
-            nio2regionx = list(reversed(x_data_1[7])) + list(x_data_verticals_1[6]) + list(x_data_1[7]) + list(
-                [14 for i in range(0, 5)])
-            nio2regiony = list(reversed(y_data_bottom_1[7])) + list(vys_1[6]) + list(y_data_top_1[7]) + list(
-                np.linspace(R12(14, T_), T12(14, T_), 5))
-            xs = [niregionx,nio3regionx,nip2regionx, NiH2citregionx, NiHcitregionx, Nicitregionx, nio2regionx]
-            ys = [niregiony,nio3regiony,nip2regiony, NiH2citregiony, NiHcitregiony, Nicitregiony, nio2regiony]
+            xs = [niregionx,nio3regionx,nip2regionx, NiH2citregionx, NiHcitregionx, Nicitregionx, nin6p2regionx, nio2regionx2]
+            ys = [niregiony,nio3regiony,nip2regiony, NiH2citregiony, NiHcitregiony, Nicitregiony, nin6p2regiony, nio2regiony2]
+            return [xs, ys, niregionx, niregiony, nio3regionx, nio3regiony]
 
         elif status == 3:
             nio3regionx = list(new_x_bottom_1) + list([14 for i in range(0, 5)]) + list(
@@ -833,9 +776,6 @@ def speciation_graph(ni_total, citrate_total, ammonia_total):
         color = ['rgba(127, 63, 191, 0.5)', 'rgba(30, 205, 40, 0.5)','rgba(191, 63, 63, 0.5)', 'rgba(243, 238, 77, 0.5)', 'rgba(114, 102, 234, 0.63)',
                  'rgba(114, 204, 234, 0.63)', 'rgba(245, 40, 145, 0.8)', 'rgba(87, 131, 200, 0.8)',
                  'rgba(8, 217, 167, 0.66)', 'rgba(222, 76, 63, 0.63)','rgba(55, 225, 234, 0.63)']
-
-    elif status == 2: # this never really happens
-        name = ['Ni', 'Ni(OH)<sub>3</sub>','Ni<sup>2+</sup>', 'NiH<sub>2</sub>cit<sup>+</sup>', 'NiHcit</sub>', 'Nicit<sup>-</sup>','Ni(OH)<sub>2</sub>']
 
     elif status == 3:
         name = ['Ni', 'Ni(OH)<sub>3</sub>','Ni<sup>2+</sup>', 'NiH<sub>2</sub>cit<sup>+</sup>', 'NiHcit</sub>', 'Nicit<sup>-</sup>','Ni(OH)<sub>2</sub>']
