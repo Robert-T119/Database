@@ -516,7 +516,7 @@ def speciation_graph(ni_total, citrate_total):
      Input('citrate_dropdown', 'value')])
 
 def speciation_graph(ni_total, citrate_total):
-    k1 = 9.197 * (10 ** 11)
+    k1 = 7.129 * (10 ** 11)
     k2 = 1.01 * (10 ** -3)
     k3 = 1.787 * (10 ** -5)
     k4 = 4.031 * (10 ** -7)

@@ -142,7 +142,7 @@ app.layout = html.Div([
     Input('ammonia_dropdown', 'value')])
 
 def speciation_graph(ni_total, citrate_total,ammonia_total):
-    k1 = 9.197 * (10 ** 11)
+    k1 = 7.129 * (10 ** 11)
     k2 = 9.905 * (10 ** 2)
     k3 = 5.595 * (10 ** 4)
     k4 = 2.481 * (10 ** 6)
@@ -278,7 +278,7 @@ def speciation_graph(ni_total, citrate_total,ammonia_total):
      Input('ammonia_dropdown', 'value')])
 
 def speciation_graph(ni_total, citrate_total, ammonia_total):
-    k1 = 9.197 * (10 ** 11)
+    k1 = 7.129 * (10 ** 11)
     k2 = 9.905 * (10 ** 2)
     k3 = 5.595 * (10 ** 4)
     k4 = 2.481 * (10 ** 6)

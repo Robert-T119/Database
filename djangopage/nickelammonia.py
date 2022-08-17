@@ -124,7 +124,7 @@ def speciation_graph(nitotal, ntotal):
     k2 = 10 ** (-9.25)
     k4 = 10 ** (-18.26)
     k5 = 10 ** (-35.91)
-    logk = 11.9637
+    logk = 11.853
     #----------------------------------------------------------------------------------------------
     # begin first function, output all species concentrations. One concentration for each pH value.
     def species1(pH_x, ntotal, nitotal):
@@ -565,7 +565,7 @@ def speciation_graph(nitotal, ntotal):
     k2 = 10 ** (-9.25)
     k4 = 10 ** (-18.26)
     k5 = 10 ** (-35.91)
-    logk = 11.9637
+    logk = 11.853
     pH_x = np.linspace(0.1, 14, 50)
     #----------------------------------------------------------------------------------------------
     # begin first function, output all species concentrations. One concentration for each pH value.

@@ -319,7 +319,7 @@ def nickelpure(nitotal):
     [Input('nickel_slider', 'value')])
 def nickelpure1(nitotal):
     def concs(pH_x, nitotal):
-        logk = 11.96
+        logk = 11.853
         f = 10**(logk - 2*pH_x)
         nip2free = f/(1+f/nitotal)
         nio2 = nitotal - nip2free
