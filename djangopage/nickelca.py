@@ -455,7 +455,7 @@ def potential_graph(ni_total, citrate_total, ammonia_total):
             def difference3(pH_x):
                 return np.abs(interp12(pH_x) - interp8(pH_x))
 
-            aaa.append(scipy.optimize.fsolve(difference1, x0=6.0))
+            aaa.append(scipy.optimize.fsolve(difference1, x0=5.5))
             aaa.append(scipy.optimize.fsolve(difference2, x0=6.3))
             aaa.append(scipy.optimize.fsolve(difference3, x0=8.5))
 
@@ -488,7 +488,7 @@ def potential_graph(ni_total, citrate_total, ammonia_total):
         elif status == 3:
             def difference1(pH_x):
                 return np.abs(interp12(pH_x) - interp1(pH_x))
-            aaa.append(scipy.optimize.fsolve(difference1, x0=6.0))
+            aaa.append(scipy.optimize.fsolve(difference1, x0=5.5))
 
         elif status == 4:
             def difference1(pH_x):
