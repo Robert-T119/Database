@@ -447,7 +447,7 @@ def potential_graph(ni_total, citrate_total, ammonia_total):
                 status = 1
             elif maxNiH2cit < ni2pplot[i] and maxNicit > nio2plot[j] and maxnin6p2 > nio2plot[k]:
                 status = 2
-            elif maxNiH2cit < ni2pplot[i] and maxNicit < nio2plot[j] and maxnin6p2 < nio2plot[k]:
+            elif maxNiH2cit < ni2pplot[i] and maxNicit < nio2plot[j] and maxnin6p2 < nio2plot[k] and y2 > y1:
                 status = 3
             elif maxNiH2cit < ni2pplot[i] and maxNicit < nio2plot[j] and maxnin6p2 > nio2plot[k] and y2 > y1:
                 status = 4
@@ -459,6 +459,8 @@ def potential_graph(ni_total, citrate_total, ammonia_total):
                 status = 7
             elif maxNiH2cit < ni2pplot[i] and maxNicit < nio2plot[j] and maxnin6p2 > nio2plot[k] and y2 < y1:
                 status = 8
+            elif maxNiH2cit < ni2pplot[i] and maxNicit < nio2plot[j] and maxnin6p2 < nio2plot[k] and y2 < y1:
+                status = 9
         elif citrate_total == 0.0 and ammonia_total == 0.0:
             status = 3
         return status
@@ -535,6 +537,10 @@ def potential_graph(ni_total, citrate_total, ammonia_total):
             aaa.append(scipy.optimize.fsolve(difference13, x0=8.5))
             aaa.append(scipy.optimize.fsolve(difference8, x0=9.1))
             aaa.append(scipy.optimize.fsolve(difference9, x0=11.0))
+
+        elif status == 9.0:
+            aaa.append(scipy.optimize.fsolve(difference10, x0=6.0))
+            aaa.append(scipy.optimize.fsolve(difference11, x0=6.4))
 
         x_intercept = []
         for xvalues in aaa:
@@ -636,6 +642,11 @@ def potential_graph(ni_total, citrate_total, ammonia_total):
                              np.linspace(R9(x_intercept[5], nh4, nin6p2, T_), R10(nh3, nin6p2, T_), 5),
                              np.linspace(R10(nh3, nin6p2, T_), R11(14, T_), 5)]
 
+        elif status == 9.0:
+            y_data_bottom = [[R1(ni2pfree, T_) for i in range(len(x_data[0]))],
+                             np.linspace(R1(ni2pfree, T_), R6(x_intercept[1], T_, Nicit, Hcit), 5),
+                             np.linspace(R6(x_intercept[1], T_, Nicit, Hcit), R11(14, T_), 5)]
+
         new_y_bottom = []
         for yvalues in y_data_bottom:
             for yvalue in yvalues:
@@ -718,6 +729,11 @@ def potential_graph(ni_total, citrate_total, ammonia_total):
                           np.linspace(T9(x_intercept[5], nh4, nin6p2, T_), T10(nh3, x_intercept[6], nin6p2, T_), 5),
                           np.linspace(T10(nh3, x_intercept[6], nin6p2, T_), T11(14, T_), 5)]
 
+        elif status == 9.0:
+            y_data_top = [np.linspace(T1(ni2pfree, 0, T_), T1(ni2pfree, x_intercept[0], T_), 5),
+                          np.linspace(T1(ni2pfree, x_intercept[0], T_), T6(x_intercept[1], Nicit, Hcit, T_), 5),
+                          np.linspace(T6(x_intercept[1], Nicit, Hcit, T_), T11(14, T_), 5)]
+
         new_y_top = []
         for yvalues in y_data_top:
             for yvalue in yvalues:
@@ -732,6 +748,7 @@ def potential_graph(ni_total, citrate_total, ammonia_total):
             reversed(np.linspace(0, 14, 5))) + list([0 for i in range(0, 5)])
         niregiony = list(new_y_bottom) + list(np.linspace(R11(14, T_), -1.8, 5)) + list(
             [-1.8 for i in range(0, 5)]) + list(np.linspace(-1.8, R1(ni2pfree, 298), 5))
+
         if status == 0.0:
             nip2regionx = list(x_data[0]) + list(np.linspace(x_intercept[0], x_intercept[0], 5)) + list(
                 reversed(x_data[0])) + list([0 for i in range(0, 5)])
@@ -1061,6 +1078,27 @@ def potential_graph(ni_total, citrate_total, ammonia_total):
 
             xs = [nip2regionx, Nicitregionx1, nio2regionx1, Nicitregionx2, nin4p2regionx,nin6p2regionx, nio2regionx2]
             ys = [nip2regiony, Nicitregiony1, nio2regiony1, Nicitregiony2, nin4p2regiony,nin6p2regiony, nio2regiony2]
+
+        elif status == 9:
+            nip2regionx = list(x_data[0]) + list(np.linspace(x_intercept[0], x_intercept[0], 5)) + list(
+                reversed(x_data[0])) + list([0 for i in range(0, 5)])
+            nip2regiony = list(y_data_bottom[0]) + list(
+                np.linspace(R1(ni2pfree, T_), T1(ni2pfree, x_intercept[0], T_), 5)) + list(
+                reversed(y_data_top[0])) + list(np.linspace(T1(ni2pfree, 0, T_), R1(ni2pfree, T_), 5))
+
+            Nicitregionx = list(x_data[1]) + list(np.linspace(x_intercept[1], x_intercept[1], 5)) + list(
+                reversed(x_data[1])) + list(np.linspace(x_intercept[0], x_intercept[0], 5))
+            Nicitregiony = list(y_data_bottom[1]) + list(
+                np.linspace(R6(x_intercept[1], T_, Nicit, Hcit), T6(x_intercept[1], Nicit, Hcit, T_), 5)) + list(
+                reversed(y_data_top[1])) + list(np.linspace(T1(ni2pfree, x_intercept[0], T_), R1(ni2pfree, T_), 5))
+
+            nio2regionx = list(np.linspace(x_intercept[1], x_intercept[1], 5)) + list(x_data[2]) + list(
+                [14 for i in range(0, 5)]) + list(reversed(x_data[2]))
+            nio2regiony = list(
+                np.linspace(R6(x_intercept[1], T_, Nicit, Hcit), T6(x_intercept[1], Nicit, Hcit, T_), 5)) + list(
+                y_data_bottom[2]) + list(np.linspace(R11(14, T_), T11(14, T_), 5)) + list(reversed(y_data_top[2]))
+            xs = [nip2regionx, Nicitregionx, nio2regionx]
+            ys = [nip2regiony, Nicitregiony, nio2regiony]
         return [xs, ys, niregionx, niregiony, nio3regionx, nio3regiony]
     # end function, return data to add to traces, should already be in correct form to
     # cooperate with dash notation
@@ -1109,6 +1147,10 @@ def potential_graph(ni_total, citrate_total, ammonia_total):
     elif status == 8:
         name = ['Ni<sup>2+</sup>', 'Nicit<sup>-</sup>', 'Ni(OH)<sub>2</sub>', 'Nicit<sup>-</sup>','[Ni(NH<sub>3</sub>)<sub>4</sub>]<sup>2+</sup>', '[Ni(NH<sub>3</sub>)<sub>6</sub>]<sup>2+</sup>', 'Ni(OH)<sub>2</sub>']
         color = ['rgba(191, 63, 63, 0.5)', 'rgba(243, 238, 77, 0.5)', 'rgba(114, 102, 234, 0.63)','rgba(114, 204, 234, 0.63)', 'rgba(245, 40, 145, 0.8)', 'rgba(87, 131, 200, 0.8)','rgba(114, 102, 234, 0.63)']
+
+    elif status == 9:
+        name = ['Ni<sup>2+</sup>', 'Nicit<sup>-</sup>', 'Ni(OH)<sub>2</sub>']
+        color = ['rgba(191, 63, 63, 0.5)', 'rgba(114, 102, 234, 0.63)', 'rgba(243, 238, 77, 0.5)']
 
     data = []
     for i, xvals in enumerate(xs):
@@ -1171,7 +1213,7 @@ def potential_graph(ni_total, citrate_total, ammonia_total):
         ))
     for trace in tracesextra:
         fig.add_traces(trace)
-    
+
     if ammonia_total != 0 and citrate_total !=0:
         fig.add_trace(go.Scatter(
             x=list([9.25 for i in range(len(np.linspace(-1, 2.4, 5)))]),
