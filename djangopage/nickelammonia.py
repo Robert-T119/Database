@@ -290,7 +290,7 @@ def potential_graph(ni_total, ammonia_total):
     nin4p2 = max(nin4p2plot)
     nin6p2 = max(nin6p2plot)
 
-    def nio2checker(nin4p2plot, nin6p2plot, nio2plot, ammonia_total):
+    def statuschecker(nin4p2plot, nin6p2plot, nio2plot, ammonia_total):
         if ammonia_total != 0.0:
             maxnin4p2 = max(nin4p2plot)
             i = nin4p2plot.index(maxnin4p2)
@@ -307,7 +307,7 @@ def potential_graph(ni_total, ammonia_total):
         elif ammonia_total == 0.0:
             status = 3
         return status
-    status = nio2checker(nin4p2plot, nin6p2plot, nio2plot, ammonia_total)
+    status = statuschecker(nin4p2plot, nin6p2plot, nio2plot, ammonia_total)
 
     def trace_generator(pH_x,ni2pfree,nio2,nin4p2,nin6p2,nh3,nh4,T_):
         interp1 = scipy.interpolate.InterpolatedUnivariateSpline(pH_x, ni2pplot)
@@ -489,15 +489,15 @@ def potential_graph(ni_total, ammonia_total):
 
     if status == 0:
         name = ['Ni<sup>2+</sup>','Ni(OH)<sub>2</sub>','[Ni(NH<sub>3</sub>)<sub>4</sub>]<sup>2+</sup>', '[Ni(NH<sub>3</sub>)<sub>6</sub>]<sup>2+</sup>', 'Ni(OH)<sub>2</sub>']
-        color = ['rgba(191, 63, 63, 0.5)', 'rgba(243, 238, 77, 0.5)', 'rgba(114, 102, 234, 0.63)','rgba(114, 204, 234, 0.63)', 'rgba(245, 40, 145, 0.8)']
+        color = ['rgba(30, 154, 216, 0.43)', 'rgba(243, 238, 77, 0.5)', 'rgba(114, 102, 234, 0.63)','rgba(245, 169, 104, 0.81)', 'rgba(243, 238, 77, 0.5)']
     elif status == 1:
         name = ['Ni<sup>2+</sup>', 'Ni(OH)<sub>2</sub>', '[Ni(NH<sub>3</sub>)<sub>6</sub>]<sup>2+</sup>','Ni(OH)<sub>2</sub>']
-        color = ['rgba(191, 63, 63, 0.5)', 'rgba(243, 238, 77, 0.5)', 'rgba(245, 40, 145, 0.8)','rgba(114, 204, 234, 0.63)']
+        color = ['rgba(101, 18, 183, 0.41)', 'rgba(243, 238, 77, 0.5)', 'rgba(191, 38, 42, 0.43)','rgba(114, 204, 234, 0.63)']
     elif status == 2: # this never really happens
         name = ['Ni<sup>2+</sup>', 'Ni(OH)<sub>2</sub>', 'Ni(OH)<sub>2</sub>', '[Ni(NH<sub>3</sub>)<sub>4</sub>]<sup>2+</sup>']
     elif status == 3 or ammonia_total==0 :
         name = ['Ni<sup>2+</sup>', 'Ni(OH)<sub>2</sub>']
-        color = ['rgba(127, 63, 191, 0.5)', 'rgba(30, 205, 40, 0.5)']
+        color = ['rgba(127, 14, 191, 0.5)', 'rgba(30, 205, 40, 0.5)']
 
     data = []
     for i, xvals in enumerate(xs):
@@ -553,6 +553,7 @@ def potential_graph(ni_total, ammonia_total):
             y=extray[i],
             mode='lines',
             name=namee[i],
+            #fillcolor=colors1[i],
             fill='toself',
             showlegend=True,
             hoverinfo='skip'

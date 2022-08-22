@@ -315,7 +315,7 @@ def potential_graph(ni_total, citrate_total):
     NiHcit = max(NiHcitplot)
     NiH2cit = max(NiH2citplot)
 
-    def nio2checker(NiH2citplot, NiHcitplot, Nicitplot, ni2pplot, nio2plot, citrate_total):
+    def statuschecker(NiH2citplot, NiHcitplot, Nicitplot, ni2pplot, nio2plot, citrate_total):
         if citrate_total != 0.0:
             maxNiH2cit = max(NiH2citplot)
             i = NiH2citplot.index(maxNiH2cit)
@@ -335,7 +335,7 @@ def potential_graph(ni_total, citrate_total):
         elif citrate_total == 0.0:
             status = 2
         return status
-    status = nio2checker(NiH2citplot, NiHcitplot, Nicitplot, ni2pplot, nio2plot, citrate_total)
+    status = statuschecker(NiH2citplot, NiHcitplot, Nicitplot, ni2pplot, nio2plot, citrate_total)
 
     def trace_generator(pH_x, ni2pfree, NiH2cit, NiHcit, Nicit, H3cit, H2cit, Hcit, cit3, T_):
         interp1 = scipy.interpolate.InterpolatedUnivariateSpline(pH_x, ni2pplot)
@@ -627,16 +627,16 @@ def potential_graph(ni_total, citrate_total):
 
     if status == 0:
         name = ['Ni<sup>2+</sup>', 'NiH<sub>2</sub>cit<sup>+</sup>','NiH<sub>cit</sub>', 'Nicit<sup>-</sup>','Ni(OH)<sub>2</sub>']
-        color = ['rgba(191, 63, 63, 0.5)', 'rgba(243, 238, 77, 0.5)', 'rgba(114, 102, 234, 0.63)','rgba(114, 204, 234, 0.63)', 'rgba(245, 40, 145, 0.8)']
+        color = ['rgba(191, 63, 63, 0.5)', 'rgba(243, 238, 77, 0.5)', 'rgba(114, 102, 234, 0.63)','rgba(114, 204, 234, 0.63)', 'rgba(52, 207, 42, 0.61)']
     elif status == 1:
         name = ['Ni<sup>2+</sup>', 'Nicit<sup>-</sup>', 'Ni(OH)<sub>2</sub>']
-        color = ['rgba(191, 63, 63, 0.5)', 'rgba(243, 238, 77, 0.5)', 'rgba(245, 40, 145, 0.8)']
+        color = ['rgba(101, 18, 183, 0.41)', 'rgba(30, 192, 42, 0.43)', 'rgba(243, 238, 77, 0.5)']
     elif status == 2 or citrate_total==0 :
         name = ['Ni<sup>2+</sup>', 'Ni(OH)<sub>2</sub>']
         color = ['rgba(127, 63, 191, 0.5)', 'rgba(30, 205, 40, 0.5)']
     elif status == 3:
         name = ['Ni<sup>2+</sup>', 'NiH<sub>2</sub>cit<sup>+</sup>', 'Ni<sup>2+</sup>','Nicit<sup>-</sup>', 'Ni(OH)<sub>2</sub>']
-        color = ['rgba(191, 63, 63, 0.5)','rgba(243, 238, 77, 0.5)', 'rgba(114, 102, 234, 0.63)', 'rgba(114, 204, 234, 0.63)','rgba(245, 40, 145, 0.8)']
+        color = ['rgba(191, 63, 63, 0.5)', 'rgba(243, 238, 77, 0.5)', 'rgba(114, 102, 234, 0.63)','rgba(114, 204, 234, 0.63)', 'rgba(52, 207, 42, 0.61)']
 
     data = []
     for i, xvals in enumerate(xs):

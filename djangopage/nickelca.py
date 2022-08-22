@@ -426,12 +426,12 @@ def potential_graph(ni_total, citrate_total, ammonia_total):
     def difference15(pH_x):
         return np.abs(interp13(pH_x) - interp12(pH_x))
 
-    x1 = float(scipy.optimize.fsolve(difference10, x0=6.0))
+    x1 = float(scipy.optimize.fsolve(difference10, x0=5.8))
     y1 = interp1(x1)
-    x2 = float(scipy.optimize.fsolve(difference14, x0=6.5))
+    x2 = float(scipy.optimize.fsolve(difference14, x0=6.0))
     y2 = interp1(x2)
 
-    def nio2checker(NiH2citplot, NiHcitplot, Nicitplot, ni2pplot, nin6p2plot, nio2plot, citrate_total):
+    def statuschecker(NiH2citplot, NiHcitplot, Nicitplot, ni2pplot, nin6p2plot, nio2plot, citrate_total):
         if citrate_total != 0.0 and ammonia_total != 0.0:
             maxNiH2cit = max(NiH2citplot)
             i = NiH2citplot.index(maxNiH2cit)
@@ -465,7 +465,7 @@ def potential_graph(ni_total, citrate_total, ammonia_total):
             status = 3
         return status
 
-    status = nio2checker(NiH2citplot, NiHcitplot, Nicitplot, ni2pplot, nin6p2plot, nio2plot, citrate_total)
+    status = statuschecker(NiH2citplot, NiHcitplot, Nicitplot, ni2pplot, nin6p2plot, nio2plot, citrate_total)
     # --------------------------------------------------------------------------------------------------------------
     def trace_generator(pH_x, ni2pfree, NiH2cit, NiHcit, Nicit, H3cit, H2cit, Hcit, cit3, nin4p2, nin6p2,nh4,nh3,nio2, T_):
         aaa = []
@@ -1111,10 +1111,8 @@ def potential_graph(ni_total, citrate_total, ammonia_total):
     nio3regiony = trace_generator(pH_x, ni2pfree, NiH2cit, NiHcit, Nicit, H3cit, H2cit, Hcit, cit3, nin4p2, nin6p2, nh4, nh3, nio2,T_)[5]
 
     if status == 0:
-        name = ['Ni<sup>2+</sup>',  'NiH<sub>2</sub>cit<sup>+</sup>', 'NiHcit</sub>',
-                'Nicit<sup>-</sup>', '[Ni(NH<sub>3</sub>)<sub>6</sub>]<sup>2+</sup>', 'Ni(OH)<sub>2</sub>']
-        color = ['rgba(191, 63, 63, 0.5)', 'rgba(243, 238, 77, 0.5)', 'rgba(114, 102, 234, 0.63)',
-                 'rgba(114, 204, 234, 0.63)', 'rgba(245, 40, 145, 0.8)', 'rgba(87, 131, 200, 0.8)']
+        name = ['Ni<sup>2+</sup>',  'NiH<sub>2</sub>cit<sup>+</sup>', 'NiHcit</sub>', 'Nicit<sup>-</sup>', '[Ni(NH<sub>3</sub>)<sub>6</sub>]<sup>2+</sup>', 'Ni(OH)<sub>2</sub>']
+        color = ['rgba(191, 63, 63, 0.5)', 'rgba(243, 238, 77, 0.5)', 'rgba(114, 102, 234, 0.63)','rgba(114, 204, 234, 0.63)', 'rgba(52, 207, 42, 0.52)', 'rgba(87, 131, 200, 0.8)']
 
     elif status == 1:
         name = ['Ni<sup>2+</sup>', 'Nicit<sup>-</sup>', 'Ni(OH)<sub>2</sub>']
@@ -1122,35 +1120,35 @@ def potential_graph(ni_total, citrate_total, ammonia_total):
 
     elif status == 2:
         name = ['Ni<sup>2+</sup>','Nicit<sup>-</sup>', '[Ni(NH<sub>3</sub>)<sub>4</sub>]<sup>2+</sup>',  '[Ni(NH<sub>3</sub>)<sub>6</sub>]<sup>2+</sup>', 'Ni(OH)<sub>2</sub>']
-        color = ['rgba(191, 63, 63, 0.5)','rgba(87, 131, 200, 0.8)', 'rgba(114, 102, 234, 0.63)','rgba(114, 204, 234, 0.63)', 'rgba(245, 40, 145, 0.8)']
+        color = ['rgba(191, 63, 63, 0.5)','rgba(87, 131, 200, 0.8)', 'rgba(52, 207, 42, 0.61)','rgba(114, 204, 234, 0.63)', 'rgba(243, 238, 77, 0.5)']
 
     elif status == 3:
         name = ['Ni<sup>2+</sup>', 'Ni(OH)<sub>2</sub>']
-        color = ['rgba(191, 63, 63, 0.5)', 'rgba(243, 238, 77, 0.5)']
+        color = ['rgba(127, 63, 191, 0.5)', 'rgba(30, 205, 40, 0.5)']
 
     elif status == 4:
         name = ['Ni<sup>2+</sup>', 'Ni(OH)<sub>2</sub>', '[Ni(NH<sub>3</sub>)<sub>6</sub>]<sup>2+</sup>','[Ni(NH<sub>3</sub>)<sub>6</sub>]<sup>2+</sup>', 'Ni(OH)<sub>2</sub>']
-        color = ['rgba(191, 63, 63, 0.5)','rgba(243, 238, 77, 0.5)', 'rgba(114, 102, 234, 0.63)','rgba(114, 204, 234, 0.63)', 'rgba(245, 40, 145, 0.8)']
+        color = ['rgba(191, 63, 63, 0.5)','rgba(243, 238, 77, 0.5)', 'rgba(114, 102, 234, 0.63)','rgba(114, 204, 234, 0.63)', 'rgba(245, 40, 145, 0.6)']
 
     elif status == 5:
         name = ['Ni<sup>2+</sup>',  'NiH<sub>2</sub>cit<sup>+</sup>', 'NiHcit</sub>','Nicit<sup>-</sup>', 'Ni(OH)<sub>2</sub>']
-        color = ['rgba(191, 63, 63, 0.5)', 'rgba(243, 238, 77, 0.5)', 'rgba(114, 102, 234, 0.63)','rgba(114, 204, 234, 0.63)', 'rgba(245, 40, 145, 0.8)']
+        color = ['rgba(191, 63, 63, 0.5)', 'rgba(243, 238, 77, 0.5)', 'rgba(114, 102, 234, 0.63)','rgba(114, 204, 234, 0.63)', 'rgba(245, 40, 145, 0.6)']
 
     elif status == 6:
         name = ['Ni<sup>2+</sup>',  'NiH<sub>2</sub>cit<sup>+</sup>', 'Ni<sup>2+</sup>','Nicit<sup>-</sup>', 'Ni(OH)<sub>2</sub>']
-        color = ['rgba(191, 63, 63, 0.5)', 'rgba(243, 238, 77, 0.5)', 'rgba(114, 102, 234, 0.63)','rgba(114, 204, 234, 0.63)', 'rgba(245, 40, 145, 0.8)']
+        color = ['rgba(191, 63, 63, 0.5)', 'rgba(243, 238, 77, 0.5)', 'rgba(114, 102, 234, 0.63)','rgba(114, 204, 234, 0.63)', 'rgba(245, 40, 145, 0.6)']
 
     elif status == 7:
         name = ['Ni<sup>2+</sup>',  'NiH<sub>2</sub>cit<sup>+</sup>', 'Ni<sup>2+</sup>','Nicit<sup>-</sup>', '[Ni(NH<sub>3</sub>)<sub>6</sub>]<sup>2+</sup>', 'Ni(OH)<sub>2</sub>']
-        color = ['rgba(191, 63, 63, 0.5)', 'rgba(243, 238, 77, 0.5)', 'rgba(114, 102, 234, 0.63)','rgba(114, 204, 234, 0.63)', 'rgba(245, 40, 145, 0.8)', 'rgba(87, 131, 200, 0.8)']
+        color = ['rgba(191, 63, 63, 0.5)', 'rgba(243, 238, 77, 0.5)', 'rgba(114, 102, 234, 0.63)','rgba(114, 204, 234, 0.63)', 'rgba(245, 40, 145, 0.6)', 'rgba(87, 131, 200, 0.8)']
 
     elif status == 8:
         name = ['Ni<sup>2+</sup>', 'Nicit<sup>-</sup>', 'Ni(OH)<sub>2</sub>', 'Nicit<sup>-</sup>','[Ni(NH<sub>3</sub>)<sub>4</sub>]<sup>2+</sup>', '[Ni(NH<sub>3</sub>)<sub>6</sub>]<sup>2+</sup>', 'Ni(OH)<sub>2</sub>']
-        color = ['rgba(191, 63, 63, 0.5)', 'rgba(243, 238, 77, 0.5)', 'rgba(114, 102, 234, 0.63)','rgba(114, 204, 234, 0.63)', 'rgba(245, 40, 145, 0.8)', 'rgba(87, 131, 200, 0.8)','rgba(114, 102, 234, 0.63)']
+        color = ['rgba(191, 63, 63, 0.5)','rgba(65, 232, 103, 0.53)','rgba(243, 238, 77, 0.5)','rgba(65, 232, 103, 0.53)',  'rgba(242, 33, 103, 0.99)','rgba(255, 149, 8, 0.63)','rgba(243, 238, 77, 0.5)']
 
     elif status == 9:
         name = ['Ni<sup>2+</sup>', 'Nicit<sup>-</sup>', 'Ni(OH)<sub>2</sub>']
-        color = ['rgba(191, 63, 63, 0.5)', 'rgba(114, 102, 234, 0.63)', 'rgba(243, 238, 77, 0.5)']
+        color = ['rgba(114, 102, 234, 0.63)', 'rgba(38, 238, 77, 0.87)', 'rgba(243, 238, 77, 0.5)']
 
     data = []
     for i, xvals in enumerate(xs):
