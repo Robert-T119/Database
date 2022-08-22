@@ -497,7 +497,7 @@ def potential_graph(ni_total, ammonia_total):
         name = ['Ni<sup>2+</sup>', 'Ni(OH)<sub>2</sub>', 'Ni(OH)<sub>2</sub>', '[Ni(NH<sub>3</sub>)<sub>4</sub>]<sup>2+</sup>']
     elif status == 3 or ammonia_total==0 :
         name = ['Ni<sup>2+</sup>', 'Ni(OH)<sub>2</sub>']
-        color = ['rgba(127, 14, 191, 0.5)', 'rgba(30, 205, 40, 0.5)']
+        color = ['rgba(127, 14, 191, 0.3)', 'rgba(30, 205, 40, 0.5)']
 
     data = []
     for i, xvals in enumerate(xs):

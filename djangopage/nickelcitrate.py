@@ -183,9 +183,9 @@ def speciation_graph(ni_total, citrate_total):
     if citrate_total != 0.0:
         datasets = [cit3freeplot, nio2freeplot, ni2pfreeplot, Hcitfreeplot, H2citfreeplot,
                     H3citfreeplot, NiH2citfreeplot, NiHcitfreeplot, Nicitfreeplot]
-        name = ['Cit<sup>3-</sup>', 'Ni(OH)<sub>2</sub>', 'Ni<sup>2+</sup>', 'Hcit<sup>2-</sup>',
+        name = ['Cit<sup>3-</sup>', 'Ni(OH)<sub>2</sub>', 'Ni<sup>2+</sup>', 'Hcit<sup>-</sup>',
                 'H<sub>2</sub>cit<sup>2-</sup>', 'H<sub>3</sub>cit', 'NiH<sub>2</sub>cit<sup>+</sup>',
-                'NiH<sub>cit</sub>', 'Nicit<sup>-</sup>']
+                'NiHCit', 'Nicit<sup>-</sup>']
         fill = [None, None, None, None, None, None, None, None, None]
         color = ['rgb(90, 0, 100)', 'rgb(40, 130, 80)', 'rgb(9, 0, 0)', 'rgb(63, 63, 191)', 'rgb(191, 63, 63)',
                  'rgb(66, 81, 245)', 'rgb(218, 66, 245)', 'rgb(245, 144, 66)', 'rgb(245, 66, 90)']
@@ -626,7 +626,7 @@ def potential_graph(ni_total, citrate_total):
     nio3regiony = trace_generator(pH_x, ni2pfree, NiH2cit, NiHcit, Nicit, H3cit, H2cit, Hcit, cit3, T_)[5]
 
     if status == 0:
-        name = ['Ni<sup>2+</sup>', 'NiH<sub>2</sub>cit<sup>+</sup>','NiH<sub>cit</sub>', 'Nicit<sup>-</sup>','Ni(OH)<sub>2</sub>']
+        name = ['Ni<sup>2+</sup>', 'NiH<sub>2</sub>cit<sup>+</sup>','NiHCit', 'Nicit<sup>-</sup>','Ni(OH)<sub>2</sub>']
         color = ['rgba(191, 63, 63, 0.5)', 'rgba(243, 238, 77, 0.5)', 'rgba(114, 102, 234, 0.63)','rgba(114, 204, 234, 0.63)', 'rgba(52, 207, 42, 0.61)']
     elif status == 1:
         name = ['Ni<sup>2+</sup>', 'Nicit<sup>-</sup>', 'Ni(OH)<sub>2</sub>']
