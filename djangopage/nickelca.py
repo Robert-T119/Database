@@ -222,10 +222,9 @@ def speciation_graph(ni_total, citrate_total,ammonia_total):
         nin6p2plot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[12])
 
     datasets= [cit3plot, nio2plot, nh4plot, ni2pplot, Hcitplot, H2citplot, H3citplot, NiH2citplot, NiHcitplot,Nicitplot,nh3plot, nin4p2plot, nin6p2plot]
-    name = ['Cit3', 'Ni(OH)<sub>2</sub>', 'NH4<sup>+</sup>', 'Ni<sup>2+</sup>', 'HCit', 'H<sub>2</sub>Cit', 'H<sub>3</sub>Cit', 'NiH<sub>2</sub>Cit', 'NiHCit', 'NiCit', 'NH<sub>3</sub>', '[Ni(NH<sub>3</sub>)<sub>4</sub>]<sup>2+</sup>','[Ni(NH<sub>3</sub>)<sub>6</sub>]<sup>2+</sup>']
+    name = ['Cit<sub>3</sub>', 'Ni(OH)<sub>2</sub>', 'NH<sub>4</sub><sup>+</sup>', 'Ni<sup>2+</sup>', 'HCit', 'H<sub>2</sub>Cit<sup>2-</sup>', 'H<sub>3</sub>Cit', 'NiH<sub>2</sub>Cit<sup>+</sup>', 'NiHCit', 'NiCit<sup>-</sup>', 'NH<sub>3</sub>', '[Ni(NH<sub>3</sub>)<sub>4</sub>]<sup>2+</sup>','[Ni(NH<sub>3</sub>)<sub>6</sub>]<sup>2+</sup>']
     fill = [None, None, None, None, None, None, None, None, None, None, None, None,None, None, None]
-    color = ['rgb(90, 0, 100)', 'rgb(40, 130, 80)', 'rgb(245, 137, 22)', 'rgb(63, 63, 191)', 'rgb(191, 63, 63)', 'rgb(15, 15, 15)',
-             'rgb(235, 64, 52)','rgb(137, 232, 186)','rgb(204, 75, 131)','rgb(14, 10, 209)','rgb(172, 51, 232)','rgb(2, 92, 8)','rgb(219, 140, 176)']
+    color = ['rgb(90, 0, 100)', 'rgb(40, 130, 80)', 'rgb(245, 137, 22)', 'rgb(63, 63, 191)', 'rgb(191, 63, 63)', 'rgb(15, 15, 15)','rgb(235, 64, 52)','rgb(137, 232, 186)','rgb(204, 75, 131)','rgb(10, 129, 209)','rgb(172, 51, 232)','rgb(2, 92, 8)','rgb(219, 140, 176)']
 
     data1 = []
     for i, dataset in enumerate(datasets):
@@ -1144,7 +1143,7 @@ def potential_graph(ni_total, citrate_total, ammonia_total):
 
     elif status == 8:
         name = ['Ni<sup>2+</sup>', 'Nicit<sup>-</sup>', 'Ni(OH)<sub>2</sub>', 'Nicit<sup>-</sup>','[Ni(NH<sub>3</sub>)<sub>4</sub>]<sup>2+</sup>', '[Ni(NH<sub>3</sub>)<sub>6</sub>]<sup>2+</sup>', 'Ni(OH)<sub>2</sub>']
-        color = ['rgba(191, 63, 63, 0.5)','rgba(65, 232, 103, 0.53)','rgba(243, 238, 77, 0.5)','rgba(65, 232, 103, 0.53)',  'rgba(242, 33, 103, 0.99)','rgba(255, 149, 8, 0.63)','rgba(243, 238, 77, 0.5)']
+        color = ['rgba(191, 63, 63, 0.5)','rgba(65, 232, 103, 0.53)','rgba(243, 238, 77, 0.5)','rgba(65, 232, 103, 0.53)',  'rgba(242, 33, 103, 0.64)','rgba(255, 149, 8, 0.63)','rgba(243, 238, 77, 0.5)']
 
     elif status == 9:
         name = ['Ni<sup>2+</sup>', 'Nicit<sup>-</sup>', 'Ni(OH)<sub>2</sub>']
