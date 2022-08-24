@@ -11,16 +11,11 @@
         <style type="text/css">
         /* nice color is #6fb4d6; */
             body {
-                margin-left: 10px;
-                margin-right: 10px;
+                margin-left: 8px;
+                margin-right: 8px;
                 font-family: "Segoe UI";
-                background-color: #2d3436;
+                background-color: #10328f;
             }
-
-            p {
-                font-size: 1.21em; /* 14px/16=0.875em */
-                padding-right :130px
-                }
 
             .navbar {
                 content:"";
@@ -90,36 +85,37 @@
                 right: auto;
                 width: 100%;
             }
-            p { margin: 2px }
 
-            h2.heading {
+            p { margin: 2px;
+                font-size: 1.21em; /* 14px/16=0.875em */
+                padding-right :130px;
+                }
+
+            h1.heading {
+                color : #10328f;
                 margin-bottom: 2px;
                 margin-top: 2px;
-                background-color: #FEFDEB;
+                background-color: rgb(250,250,250);
                 padding: -4px 0px -4px 0px;
                 text-align: center;
                 border: 1px solid lightgrey;
             }
 
+            h3.heading {
+                color : #10328f;
+            }
+
             .Introduction {
                 margin-bottom: 2px;
-                background-color: rgb(250, 250, 250);
+                background-color: rgb(250,250,250);
                 padding: 4px 7px 4px 7px;
                 border: 1px solid lightgrey;
                 text-margin : 10px
             }
-            .Introduction a {
-                color: #2d3436;
-            }
-            .Introduction a:hover {
-                color: #ff7675;
-                text-decoration: none;
-
-            }
 
             .database {
                 margin-bottom: 2px;
-                background-color: rgb(250, 250, 250);
+                background-color: rgb(250,250,250);
                 padding: 4px 7px 4px 7px;
                 border: 1px solid lightgrey;
             }
@@ -134,7 +130,7 @@
 
             #Background {
                 margin-bottom: 2px;
-                background-color: rgb(250, 250, 250);
+                background-color: rgb(250,250,250);
                 padding: 4px 7px 4px 7px;
                 border: 1px solid lightgrey;
                 text-margin : 10px
@@ -144,12 +140,14 @@
               text-align: center;
               font-size: 1.4em;
             }
-            #Background a {
-                color: #2d3436;
-            }
-            #Background a:hover {
-                color: #ff7675;
-                text-decoration: none;
+
+            #background-wrap {
+              bottom: 0;
+              left: 0;
+              position: fixed;
+              right: 0;
+              top: 0;
+              z-index: -1;
             }
 
             .frac {
@@ -160,6 +158,7 @@
             font-size: 0.65em;
             text-align: center;
             }
+
             .frac > span {
                 display: block;
                 padding: 0em;
@@ -176,14 +175,7 @@
                 content: ""; /* clears default height */
                 margin-top: 0; /* change this to whatever height you want it */
             }
-            #background-wrap {
-                bottom: 0;
-            	left: 0;
-            	position: fixed;
-            	right: 0;
-            	top: 0;
-            	z-index: -1;
-            }
+
             @keyframes pulse {
                   0% { transform: scale(1); }
                   50% { transform: scale(1.1);
@@ -442,35 +434,35 @@
         </div>
 
 
-        <h2 class='heading'>The Speciation diagram and Pourbaix diagram</h2>
+        <h1 class='heading'>The Speciation diagram and Pourbaix diagram</h1>
 
         <div class='Introduction'>
-            <h3><u> Introduction</u></h3>
+            <h3 style="color:#10328f"> Introduction</h3>
             <p> This website provides speciation diagrams and pourbiax diagrams for different systems. The aim of these diagrams
             is to map the conditions of potential and pH (most typically in aqueous solutions) where different redox species are stable.
             And they can also be used for different purposes, e.g. predicting the spontaneous direction of electrochemical reactions
                 and the equilibrium state of the metal at a certain electrode potential in a water solution at a certain value of PH,
-                and determining the corrosion behavior of a metal in water solutions</p>
+                and determining the corrosion behavior of a metal in water solutions.</p>
         </div>
 
         <div class='database'>
-            <h3><u> Database</u></h3>
-            <p><a href="{% url 'nickelpure' %}">1.Nickel-H<sub>2</sub>O</a> </p>
-            <p><a href="{% url 'nickelammonia' %}">2.Nickel-Ammonia-H<sub>2</sub>O</a ></p>
-            <p><a href="{% url 'nickelcitrate' %}">3.Nickel-Citrate-H<sub>2</sub>O</a> </p>
-            <p><a href="{% url 'nickelca' %}">4.Nickel-Citrate-Ammonia-H<sub>2</sub>O</a> </p>
-            <p><a href="{% url 'copper' %}">5.Copper-H<sub>2</sub>O</a> </p>
+            <h3 style="color:#10328f">Database</h3>
+            <p><a href="{% url 'nickelpure' %}">1. Nickel-H<sub>2</sub>O</a> </p>
+            <p><a href="{% url 'nickelammonia' %}">2. Nickel-Ammonia-H<sub>2</sub>O</a ></p>
+            <p><a href="{% url 'nickelcitrate' %}">3. Nickel-Citrate-H<sub>2</sub>O</a> </p>
+            <p><a href="{% url 'nickelca' %}">4. Nickel-Citrate-Ammonia-H<sub>2</sub>O</a> </p>
+            <p><a href="{% url 'copper' %}">5. Copper-H<sub>2</sub>O</a> </p>
         </div>
 
         <div id='Background'>
-            <h3><u>Background</u></h3>
-            <h4>-The Speciation diagram</h4>
+            <h3 style="color:#10328f">Background</h3>
+            <h4 style="color:#10328f">&#8226 The Speciation diagram</h4>
             <p>Speciation diagrams are useful in determining the effects of conditions on the distribution of species, they are based on the
                 thermodynamic data and plotted according to the mass balance of species. Many species, such as citrate and ammonia, form complexes with hydrogen ions.
                 Thus, the final equilibrium speciation is often pH dependent. Similarly, other complexes and related speciation are influenced by other ions.
                 Speciation diagram provides information about pH values of important ion dissociation events.</p>
             <p><br></p>
-            <h4>-The Nernst equation</h4>
+            <h4 style="color:#10328f" >&#8226 The Nernst equation</h4>
             <p>Before introducing the Nernst equation, it is important to first introduce the relationship between the Gibbs free energy and the electrode potential:</p>
             <span>&#916;G<sub>r</sub> = -V<sub>e</sub>FE</span>
             <p> where V<sub>e</sub> is the number of electrons transferred in a reaction, E is the electrode potential and
@@ -482,13 +474,13 @@
             <span>Q = <div class="frac">
                 <span>[A]<sup>a</sup>[B]<sup>b</sup></span>
                 <span class="bottom">[C]<sup>c</sup>[D]<sup>d</sup></span>
-            </div></span>
+            </div> </span>
             <p>This can be outside equilibrium and the various a represent the activity of a particular species. This activity can be represented by:</p>
-            <p>&#8226 Solutions: will either be equivalent to the actual activity or concentration.</p>
-            <p>&#8226 Gases: will be given by their partial pressure.</p>
-            <p>&#8226 Solvent: as they are the dominating species, they will be given a value of 1 (usually for water).</p>
-            <p>&#8226 Solids: As they essentially exist as a bulk, they are usually assumed to have a value of 1.</p>
-            <p>&#8226 Electrons: Assigned a value of 1.</p>
+            <p>—Solutions: will either be equivalent to the actual activity or concentration.</p>
+            <p>—Gases: will be given by their partial pressure.</p>
+            <p>—Solvent: as they are the dominating species, they will be given a value of 1 (usually for water).</p>
+            <p>—Solids: As they essentially exist as a bulk, they are usually assumed to have a value of 1.</p>
+            <p>—Electrons: Assigned a value of 1.</p>
             <p><br></p>
             <p>The Nernst equation is given by:</p>
             <span>E = E<sup>&#8861</sup>- <div class="frac">
@@ -504,20 +496,17 @@
                 <span class="bottom">V<sub>e</sub></span>
             </div> logQ;   At T =298k
             </span>
-            <h4>-The Pourbaix diagram</h4>
+            <h4 style="color:#10328f">&#8226 The Pourbaix diagram</h4>
             <p> Pourbaix diagrams are plotted by using the Nernst equations As the Nernst equation is derived entirely from thermodynamics,
                 the Pourbaix diagram can be used to determine which species (metals or alloys) is thermodynamically stable at
                 a given electrode potential (E) and pH.</p>
             <p><br></p>
             <p>Characteristics of Pourbaix diagram:</p>
-            <p>&#8226 Horizontal lines represent electron transfer reactions. They are pH-independent, but potential-dependent.</p>
-            <p>&#8226 Vertical lines are potential-independent but pH-dependent and not accompanied by any electron transfer.</p>
-            <p>&#8226 Sloping, straight lines give the redox potentials of a solution in equilibrium. This equilibrium indicates electron transfer as well as pH.</p>
-            <p>&#8226 The diagram is computed for the equilibrium conditions at 25&#8451;</p>
+            <p>-Horizontal lines represent electron transfer reactions. They are pH-independent, but potential-dependent.</p>
+            <p>-Vertical lines are potential-independent but pH-dependent and not accompanied by any electron transfer.</p>
+            <p>-Sloping, straight lines give the redox potentials of a solution in equilibrium. This equilibrium indicates electron transfer as well as pH.</p>
+            <p>-The diagram is computed for the equilibrium conditions at 25&#8451;.</p>
             <p><br></p>
         </div>
-        <p><br></p>
-        <p><br></p>
-        <p><br></p>
     </body>
 </html>

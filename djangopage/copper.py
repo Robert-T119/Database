@@ -13,13 +13,14 @@ app1 = DjangoDash('copper', add_bootstrap_links=True)
 
 app1.layout = html.Div([
     html.Div([
-        html.H2(u'Copper-H\u2082O system')],
+        html.H1(u'Copper-H\u2082O system')],
         style={
             'text-align':'center',
             'border': 'thin lightgrey solid',
             'backgroundColor': '#FEFDEB',
             'padding': '-4px 0 -4px 0',
             'margin-bottom': '2px',
+            'color': '#10328f',
         }
         ),
 

@@ -14,18 +14,19 @@ app1 = DjangoDash('nickelpure', add_bootstrap_links=True)
 
 app1.layout = html.Div([
     html.Div([
-        html.H2(u'Nickel-H\u2082O system')],
+        html.H1(u'Nickel-H\u2082O system')],
         style={
             'text-align':'center',
             'border': 'thin lightgrey solid',
             'backgroundColor': '#FEFDEB',
             'padding': '-4px 0 -4px 0',
             'margin-bottom': '2px',
+            'color': '#10328f',
         }
         ),
 
     html.Div([
-        html.H6(u"Total nickelcitrate concentration (kmolm\u207B\u00B3):"),
+        html.H6(u"Total nickel concentration (kmolm\u207B\u00B3):"),
         dcc.Slider(
             id='nickel_slider',
             min=0.1,

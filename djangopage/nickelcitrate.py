@@ -18,13 +18,14 @@ app = DjangoDash('nickelcitrate', add_bootstrap_links=True)
 
 app.layout = html.Div([
     html.Div([
-        html.H2(u'Nickel-Citrate-H\u2082O system')],
+        html.H1(u'Nickel-Citrate-H\u2082O system')],
         style={
             'text-align':'center',
             'border': 'thin lightgrey solid',
             'backgroundColor': '#FEFDEB',
             'padding': '-10px 0 -10px 0',
             'margin-bottom': '2px',
+            'color': '#10328f',
         }
         ),
 

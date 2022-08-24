@@ -9,13 +9,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style type="text/css">
         body {
-            margin-left: 10px;
-            margin-right: 10px;
+            margin-left: 8px;
+            margin-right: 8px;
             font-family: "Segoe UI";
-            background-color: #2d3436;
+            background-color: #10328f;
         }
         .rc-slider-track {
-          background-color: #2d3436;
+          background-color: #10328f;
         }
 
         .rc-slider-dot-active {
@@ -79,7 +79,7 @@
             padding: 10px 15px 10px;
             border: grey;
             margin-bottom: 500px;
-            background-color: rgb(250, 250, 250);
+            background-color: rgb(254,252,235);
         }
         .methods:hover {
             color: #ff7675;
@@ -407,11 +407,11 @@
         {% plotly_direct name="nickelcitrate" %}
 
          <div id='description'>
-            <h4> <b>Description of method</b> </h4>
-             <h5> —Mass Balances: </h5>
+            <h3 style="color:#10328f"> Description of method </h3>
+            <h5 style="color:#10328f"> —Mass Balances: </h5>
             <p> [Citrate]<sub>Total</sub>  =  [H<sub>3</sub>Cit] + [H<sub>2</sub>Cit<sup>-</sup>] + [HCit<sup>2-</sup>] + [Cit<sup>3-</sup>] + [NiCit<sup>-</sup>] + [NiHCit] + [NiH<sub>2</sub>Cit<sup>+</sup>]</p>
             <p> [Ni<sup>II</sup>]<sub>Total</sub>  =  [Ni<sup>2+</sup>] + [Ni(OH)<sub>2</sub>] + [NiCit<sup>-</sup>] + [NiHCit] + [NiH<sub>2</sub>Cit<sup>+</sup>] </p>
-            <h5> —Chemical reactions:</h5>
+            <h5 style="color:#10328f"> —Chemical reactions:</h5>
             <p> 1. H<sub>3</sub>Cit = H<sup>+</sup> + H<sub>2</sub>Cit<sup>-</sup> </p>
             <p> 2. H<sub>2</sub>Cit<sup>-</sup> = H<sup>+</sup> + HCit<sup>2-</sup> </p>
             <p> 3. HCit<sup>2-</sup> = H<sup>+</sup> + Cit<sup>3-</sup> </p>
@@ -423,7 +423,7 @@
             <p> 9. Ni<sup>2+</sup> + H<sub>3</sub>Cit = NiH<sub>2</sub>Cit<sup>+</sup> + H<sup>+</sup> </p>
             <p> 10. NiH<sub>2</sub>Cit<sup>+</sup> = NiHCit + H<sup>+</sup> </p>
             <p> 11. NiHCit = NiCit<sup>-</sup> + H<sup>+</sup> </p>
-            <h5> —Electrochemical reactions: </h5>
+            <h5 style="color:#10328f"> —Electrochemical reactions: </h5>
             <p> 1. Ni<sup>2+</sup> + 2e<sup>-</sup> = Ni </p>
             <p> 2. NiH<sub>2</sub>Cit<sup>+</sup> + H<sup>+</sup> + 2e<sup>-</sup> = Ni + H<sub>3</sub>Cit </p>
             <p> 3. NiHCit + 2H<sup>+</sup> + 2e<sup>-</sup> = Ni + H<sub>3</sub>Cit </p>

@@ -9,13 +9,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style type="text/css">
         body {
-            margin-left: 10px;
-            margin-right: 10px;
+            margin-left: 8px;
+            margin-right: 8px;
             font-family: "Segoe UI";
-            background-color: #2d3436;
+            background-color: #10328f;
         }
         .rc-slider-track {
-          background-color: #2d3436;
+          background-color: #10328f;
         }
 
         .rc-slider-dot-active {
@@ -79,7 +79,7 @@
             padding: 10px 15px 10px;
             border: grey;
             margin-bottom: 500px;
-            background-color: rgb(250, 250, 250);
+            background-color: rgb(254,252,235);
         }
         .methods:hover {
             color: #ff7675;
@@ -407,11 +407,11 @@
         {% plotly_direct name="nickelammonia" %}
 
          <div id='description'>
-            <h4> <b>Description of method</b> </h4>
-            <h5>—Mass Balances: </h5>
+            <h3 style="color:#10328f"> <b>Description of method</b> </h3>
+            <h5 style="color:#10328f">—Mass Balances: </h5>
             <p> [NH<sub>3</sub>]<sub>Total</sub>  =  [NH<sub>3</sub>] + [NH<sub>4</sub><sup>+</sup>] + 4[Ni(NH<sub>3</sub>)<sub>4</sub><sup>2+</sup>] + 6[Ni(NH<sub>3</sub>)<sub>6</sub><sup>2+</sup>]</p>
             <p> [Ni<sup>II</sup>]<sub>Total</sub>  =  [Ni<sup>2+</sup>] + [Ni(OH)<sub>2</sub>] + [Ni(NH<sub>3</sub>)<sub>4</sub><sup>2+</sup>] + [Ni(NH<sub>3</sub>)<sub>6</sub><sup>2+</sup>]</p>
-            <h5> —Chemical reactions:</h5>
+            <h5 style="color:#10328f"> —Chemical reactions:</h5>
             <p> 1. NH<sub>3</sub>(g) = NH<sub>3</sub>(aq)
             <p> 2. NH<sub>4</sub><sup>+</sup> + H<sup>+</sup> = NH<sub>3</sub> </p>
             <p> 3. Ni(OH)<sub>2</sub>(c) + 2H<sup>+</sup> = Ni<sup>2+</sup> + 2H<sub>2</sub>O </p>
@@ -419,7 +419,7 @@
             <p> 5. Ni(OH)<sub>2</sub> + 6NH<sub>4</sub><sup>+</sup> = Ni(NH<sub>3</sub>)<sub>6</sub><sup>2+</sup> + 2H<sub>2</sub>O + 4H<sup>+</sup> </p>
             <p> 6.Ni(OH)<sub>2</sub>(c) + 4NH<sub>3</sub> + 2H<sup>+</sup>= Ni(NH<sub>3</sub>)<sub>4</sub><sup>2+</sup> + 2H<sub>2</sub>O</p>
             <p> 7. Ni(OH)<sub>2</sub>(c) + 6NH<sub>3</sub> = Ni(NH<sub>3</sub>)<sub>6</sub><sup>2+</sup> + 2H<sub>2</sub>O </p>
-            <h5> —Electrochemical reactions: </h5>
+            <h5 style="color:#10328f"> —Electrochemical reactions: </h5>
             <p> 1. Ni<sup>2+</sup> + 2e<sup>-</sup> = Ni </p>
             <p> 2. Ni(OH)<sub>2</sub> + 2H<sup>+</sup> +2e<sup>-</sup> = Ni + 2H<sub>2</sub>O </p>
             <p> 3. Ni(NH<sub>3</sub>)<sub>4</sub><sup>2+</sup> + 4H<sup>+</sup> +2e<sup>-</sup> = Ni + 4NH<sub>4</sub><sup>+</sup> </p>

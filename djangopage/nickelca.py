@@ -18,7 +18,7 @@ app = DjangoDash('nickelca', add_bootstrap_links=True)
 
 app.layout = html.Div([
     html.Div([
-        html.H2(u'Nickel-Citrate-Ammonia-H\u2082O system')],
+        html.H1(u'Nickel-Citrate-Ammonia-H\u2082O system')],
         style={
             'text-align':'center',
             'border': 'thin lightgrey solid',
@@ -26,6 +26,7 @@ app.layout = html.Div([
             'padding': '-10px 0 -10px 0',
             'margin-bottom': '2px',
             'width': '100%',
+            'color': '#10328f',
         }
         ),
 
