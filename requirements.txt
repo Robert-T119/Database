@@ -31,7 +31,7 @@ Django==3.2.14
 django-bootstrap==0.2.4
 django-bootstrap4==22.1
 django-on-heroku==1.1.2
-django-plotly-dash==2.0.0
+django-plotly-dash==1.7.2
 django-storages==1.12.3
 dpd-components==0.1.0
 Flask==2.1.3
