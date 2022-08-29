@@ -141,7 +141,7 @@ def potential_graph(ni_total, ammonia_total):
                 nin6p2 = k3 * (nh4 ** 6) / (h ** 4)
                 return (ammonia_total - nh3 - 4 * nin4p2 - 6 * nin6p2 - nh4,
                         ni_total - ni2pfree - nin4p2 - nin6p2 - nio2)
-            res = scipy.optimize.least_squares(equations, (0.1, 0.1), bounds=((0, 0), (ammonia_total, ni_total)),method='dogbox', xtol=1e-12)
+            res = least_squares(equations, (0.1, 0.1), bounds=((0, 0), (ammonia_total, ni_total)),method='dogbox', xtol=1e-12)
             nh4 = res.x[0]
             nio2 = res.x[1]
             f = 10 ** (logk - 2 * pH_x)
@@ -255,7 +255,7 @@ def potential_graph(ni_total, ammonia_total):
                 nin6p2 = k3 * (nh4 ** 6) / (h ** 4)
                 return (ammonia_total - nh3 - 4 * nin4p2 - 6 * nin6p2 - nh4,
                         ni_total - ni2pfree - nin4p2 - nin6p2 - nio2)
-            res = scipy.optimize.least_squares(equations, (0.1, 0.1), bounds=((0, 0), (ammonia_total, ni_total)),method='dogbox', xtol=1e-12)
+            res = least_squares(equations, (0.1, 0.1), bounds=((0, 0), (ammonia_total, ni_total)),method='dogbox', xtol=1e-12)
             nh4 = res.x[0]
             nio2 = res.x[1]
             f = 10 ** (logk - 2 * pH_x)
