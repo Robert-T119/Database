@@ -488,8 +488,8 @@ def potential_graph(ni_total, citrate_total, ammonia_total):
         elif status == 2.0:
             aaa.append(scipy.optimize.fsolve(difference10, x0=6.0))
             aaa.append(scipy.optimize.fsolve(difference6, x0=6.3))
-            aaa.append(scipy.optimize.fsolve(difference12, x0=7.8))
-            aaa.append(scipy.optimize.fsolve(difference13, x0=8.5))
+            aaa.append(scipy.optimize.fsolve(difference12, x0=8.0))
+            aaa.append(scipy.optimize.fsolve(difference13, x0=8.6))
             aaa.append(scipy.optimize.fsolve(difference8, x0=9.0))
             aaa.append(scipy.optimize.fsolve(difference9, x0=11.0))
 
