@@ -99,10 +99,10 @@ WSGI_APPLICATION = 'djangopage.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'database',
+        'NAME': 'database_pecp',
         'USER': 'database_pecp_user',
         'PASSWORD': 'fJ2GUPLV1AuwpslGhpYAWdFFHsbkomIM',
-        'HOST': 'dpg-cj2grcl9aq0e0q205jl0-a',
+        'HOST': 'dpg-cj2grcl9aq0e0q205jl0-a.oregon-postgres.render.com',
         'PORT': '5432',
     }
 }
