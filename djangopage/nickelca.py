@@ -208,19 +208,20 @@ def speciation_graph(ni_total, citrate_total,ammonia_total):
     nin6p2plot = []
 
     for pHval in pH_x:
-        cit3plot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[0])
-        nio2plot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[1])
-        nh4plot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[2])
-        ni2pplot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[3])
-        Hcitplot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[4])
-        H2citplot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[5])
-        H3citplot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[6])
-        NiH2citplot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[7])
-        NiHcitplot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[8])
-        Nicitplot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[9])
-        nh3plot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[10])
-        nin4p2plot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[11])
-        nin6p2plot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[12])
+        concs_results = concs(citrate_total, ni_total, ammonia_total, pHval)
+        cit3plot.append(concs_results[0])
+        nio2plot.append(concs_results[1])
+        nh4plot.append(concs_results[2])
+        ni2pplot.append(concs_results[3])
+        Hcitplot.append(concs_results[4])
+        H2citplot.append(concs_results[5])
+        H3citplot.append(concs_results[6])
+        NiH2citplot.append(concs_results[7])
+        NiHcitplot.append(concs_results[8])
+        Nicitplot.append(concs_results[9])
+        nh3plot.append(concs_results[10])
+        nin4p2plot.append(concs_results[11])
+        nin6p2plot.append(concs_results[12])
 
     datasets= [cit3plot, nio2plot, nh4plot, ni2pplot, Hcitplot, H2citplot, H3citplot, NiH2citplot, NiHcitplot,Nicitplot,nh3plot, nin4p2plot, nin6p2plot]
     name = ['Cit<sup>3-<sup>', 'Ni(OH)<sub>2</sub>', 'NH<sub>4</sub><sup>+</sup>', 'Ni<sup>2+</sup>', 'HCit<sup>2-</sup>', 'H<sub>2</sub>Cit<sup>-</sup>', 'H<sub>3</sub>Cit', 'NiH<sub>2</sub>Cit<sup>+</sup>', 'NiHCit', 'NiCit<sup>-</sup>', 'NH<sub>3</sub>', '[Ni(NH<sub>3</sub>)<sub>4</sub>]<sup>2+</sup>','[Ni(NH<sub>3</sub>)<sub>6</sub>]<sup>2+</sup>']
@@ -344,19 +345,20 @@ def potential_graph(ni_total, citrate_total, ammonia_total):
     nin6p2plot = []
 
     for pHval in pH_x:
-        cit3plot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[0])
-        nio2plot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[1])
-        nh4plot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[2])
-        ni2pplot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[3])
-        Hcitplot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[4])
-        H2citplot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[5])
-        H3citplot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[6])
-        NiH2citplot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[7])
-        NiHcitplot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[8])
-        Nicitplot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[9])
-        nh3plot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[10])
-        nin4p2plot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[11])
-        nin6p2plot.append(concs(citrate_total, ni_total, ammonia_total, pHval)[12])
+        concs_results = concs(citrate_total, ni_total, ammonia_total, pHval)
+        cit3plot.append(concs_results[0])
+        nio2plot.append(concs_results[1])
+        nh4plot.append(concs_results[2])
+        ni2pplot.append(concs_results[3])
+        Hcitplot.append(concs_results[4])
+        H2citplot.append(concs_results[5])
+        H3citplot.append(concs_results[6])
+        NiH2citplot.append(concs_results[7])
+        NiHcitplot.append(concs_results[8])
+        Nicitplot.append(concs_results[9])
+        nh3plot.append(concs_results[10])
+        nin4p2plot.append(concs_results[11])
+        nin6p2plot.append(concs_results[12])
      ###########################################################################################################################
     ni2pfree = nio2 = ni_total
     cit3 = Hcit = H2cit = H3cit = citrate_total

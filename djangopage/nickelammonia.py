@@ -164,12 +164,14 @@ def potential_graph(ni_total, ammonia_total):
     nio2plot = []
 
     for pHval in pH_x:
-        nh3plot.append(concs(ammonia_total, ni_total, pHval)[0])
-        nh4plot.append(concs(ammonia_total, ni_total, pHval)[1])
-        nin4p2plot.append(concs(ammonia_total, ni_total, pHval)[2])
-        nin6p2plot.append(concs(ammonia_total, ni_total, pHval)[3])
-        ni2pplot.append(concs(ammonia_total, ni_total, pHval)[4])
-        nio2plot.append(concs(ammonia_total, ni_total, pHval)[5])
+        result = concs(ammonia_total, ni_total, pHval)
+        nh3plot.append(result[0])
+        nh4plot.append(result[1])
+        nin4p2plot.append(result[2])
+        nin6p2plot.append(result[3])
+        ni2pplot.append(result[4])
+        nio2plot.append(result[5])
+
 
     if ammonia_total != 0.0:
         datasets = [nh3plot,nh4plot,nin4p2plot,nin6p2plot,ni2pplot,nio2plot]
@@ -278,12 +280,13 @@ def potential_graph(ni_total, ammonia_total):
     nio2plot = []
 
     for pHval in pH_x:
-        nh3plot.append(concs(ammonia_total, ni_total, pHval)[0])
-        nh4plot.append(concs(ammonia_total, ni_total, pHval)[1])
-        nin4p2plot.append(concs(ammonia_total, ni_total, pHval)[2])
-        nin6p2plot.append(concs(ammonia_total, ni_total, pHval)[3])
-        ni2pplot.append(concs(ammonia_total, ni_total, pHval)[4])
-        nio2plot.append(concs(ammonia_total, ni_total, pHval)[5])
+        concs_result = concs(ammonia_total, ni_total, pHval)
+        nh3plot.append(concs_result[0])
+        nh4plot.append(concs_result[1])
+        nin4p2plot.append(concs_result[2])
+        nin6p2plot.append(concs_result[3])
+        ni2pplot.append(concs_result[4])
+        nio2plot.append(concs_result[5])
     #####################################################################################################
     ni2pfree = ni_total
     nh3 = nh4 = ammonia_total
