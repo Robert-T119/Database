@@ -99,7 +99,7 @@ WSGI_APPLICATION = 'djangopage.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'database_pecp',
+        'NAME': 'database',
         'USER': 'database_pecp_user',
         'PASSWORD': 'fJ2GUPLV1AuwpslGhpYAWdFFHsbkomIM',
         'HOST': 'dpg-cj2grcl9aq0e0q205jl0-a',
