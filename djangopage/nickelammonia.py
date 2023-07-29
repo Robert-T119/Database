@@ -172,7 +172,6 @@ def potential_graph(ni_total, ammonia_total):
         ni2pplot.append(result[4])
         nio2plot.append(result[5])
 
-
     if ammonia_total != 0.0:
         datasets = [nh3plot,nh4plot,nin4p2plot,nin6p2plot,ni2pplot,nio2plot]
         name = ['NH<sub>3</sub>', 'NH<sub>4</sub><sup>+</sup>', '[Ni(NH<sub>3</sub>)<sub>4</sub>]<sup>2+</sup>', '[Ni(NH<sub>3</sub>)<sub>6</sub>]<sup>2+</sup>', 'Ni<sup>2+</sup>', 'Ni(OH)<sub>2</sub>']
