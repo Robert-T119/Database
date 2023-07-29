@@ -31,7 +31,7 @@ DEBUG = True
 
 
 
-ALLOWED_HOSTS = ['127.0.0.1:8000', '127.0.0.1', 'bohui119.herokuapp.com','https://database-30lc.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1:8000', '127.0.0.1', 'bohui119.herokuapp.com','https://database-30lc.onrender.com','https://bohui119.onrender.com']
 # ALLOWED_HOSTS = []
 
 
