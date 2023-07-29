@@ -98,14 +98,25 @@ WSGI_APPLICATION = 'djangopage.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'database',
-        'USER': 'render1',
-        'PASSWORD': 'tbhtbh1109',
-        'HOST': 'localhost',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'database_pecp',
+        'USER': 'database_pecp_user',
+        'PASSWORD': 'fJ2GUPLV1AuwpslGhpYAWdFFHsbkomIM',
+        'HOST': 'dpg-cj2grcl9aq0e0q205jl0-a',
         'PORT': '5432',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'database',
+#         'USER': 'render1',
+#         'PASSWORD': 'tbhtbh1109',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Database
