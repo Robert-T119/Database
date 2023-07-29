@@ -96,6 +96,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'djangopage.wsgi.application'
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'database',
+        'USER': 'render1',
+        'PASSWORD': 'tbhtbh1109',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
+
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
@@ -119,11 +130,11 @@ WSGI_APPLICATION = 'djangopage.wsgi.application'
 #     }
 # }
 
-import dj_database_url
+# import dj_database_url
 
-DATABASES = {
-    'default': dj_database_url.parse('postgres://bohui119_user:pQ8HlfD1PvjacU7WUeUcJLzr5N0A9MXL@dpg-cc69eien6mplj39256ug-a/bohui119', conn_max_age=600, ssl_require=True)
-}
+# DATABASES = {
+#     'default': dj_database_url.parse('postgres://bohui119_user:pQ8HlfD1PvjacU7WUeUcJLzr5N0A9MXL@dpg-cc69eien6mplj39256ug-a/bohui119', conn_max_age=600, ssl_require=True)
+# }
 
 
 # Password validation
